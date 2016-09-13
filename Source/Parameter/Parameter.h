@@ -8,6 +8,7 @@
 #ifndef _PARAMETER_H_
 #define _PARAMETER_H_
 
+#include <string>
 #include "XMLParser.h"
 
 namespace _Navi_Common_
