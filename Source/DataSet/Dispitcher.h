@@ -11,11 +11,12 @@
 #include <map>
 #include <boost/thread/mutex.hpp>
 #include <boost/shared_ptr.hpp>
-#include "DataQueue.h"
+#include "DataProcessQueue.h"
 #include "../Common/Declare.h"
 
 namespace _Navi_Common_
 {
+
   typedef enum
   {
     DATA_TYPE_NONE = 0,
@@ -28,6 +29,12 @@ namespace _Navi_Common_
     DATA_TYPE_MAP,
   }NaviDataTypes;
 
+  typedef DataProcessQueue<std::allocator<void>, std::allocator<void>, std::allocator<void>, std::allocator<void> > NaviDataItemType;
+  typedef NaviDataItemType* NaviDataItemPtr;
+
+  typedef std::multimap<NaviDataTypes, NaviDataItemPtr> DataDictionary;
+  typedef DataDictionary::iterator DataDictionaryIterator;
+
   class Dispitcher
   {
   public:
@@ -36,7 +43,7 @@ namespace _Navi_Common_
     Dispitcher ();
 
   private:
-    std::multimap<NaviDataTypes, DataQueuePtr> data_dictionary;
+    DataDictionary data_dictionary;
     boost::mutex data_dict_lock;
 
   public:
@@ -45,11 +52,10 @@ namespace _Navi_Common_
     bool remap(NaviDataTypes publish_type, NaviDataTypes remap_type);
 
     template <typename M>
-    bool publish(NaviDataTypes publish_type, M publish_data);
+    bool publish(NaviDataTypes publish_type, M* publish_data);
 
-    template <class C, typename R, typename P>
-    bool subscribe(NaviDataTypes subscribe_type, C* class_instance,
-                   R* return_value, P* parameter);
+    template <class M, class C, typename R, typename P>
+    bool subscribe(NaviDataTypes subscribe_type, CallbackClass<C, R, P>* callback);
 
   };
 

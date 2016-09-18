@@ -11,6 +11,7 @@
 #include <queue>
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/mutex.hpp>
+#include "../Exception/Exception.h"
 
 namespace _Navi_Common_
 {
@@ -18,26 +19,62 @@ namespace _Navi_Common_
   class DataQueue
   {
   public:
-    DataQueue();
-    ~DataQueue();
+    DataQueue()
+    {
+      capacity_ = 10;
+    };
+    DataQueue(int capacity)
+    {
+      this->capacity_ = capacity;
+    };
+    ~DataQueue()
+    {};
 
   private:
     boost::mutex data_queue_lock;
-    std::queue<M> data_queue;
+    std::queue<M*> data_queue;
+    int capacity_;
 
   public:
-    void append(M);
-    M back();
-    M front();
-    int size();
-    bool isEmpty();
-    void clear();
+    void append(M* item)
+    {
+      boost::mutex::scoped_lock lock(data_queue_lock);
+      if(data_queue.size() >= capacity_)
+      {
+        throw DataQueueException("Data queue is full!");
+        return;
+      }
+      data_queue.push(item);
+    };
+
+    M* front()
+    {
+      M* item;
+      boost::mutex::scoped_lock lock(data_queue_lock);
+      item = data_queue.front();
+      data_queue.pop();
+      return item;
+    };
+
+    int size()
+    {
+      boost::mutex::scoped_lock lock(data_queue_lock);
+      return data_queue.size();
+    };
+
+    bool isEmpty()
+    {
+      bool is_empty;
+      boost::mutex::scoped_lock lock(data_queue_lock);
+      is_empty = data_queue.empty();
+      return is_empty;
+    };
+
+    void setCapacity(int capacity)
+    {
+      this->capacity_ = capacity;
+    };
   };
-
-  typedef DataQueue<std::allocator<void> > DataQueueType;
-
-  typedef boost::shared_ptr<DataQueueType> DataQueuePtr;
-  typedef boost::shared_ptr<DataQueueType const> DataQueueConstPtr;
 
 } /* namespace _Navi_Common_ */
 

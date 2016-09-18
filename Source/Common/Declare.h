@@ -38,6 +38,7 @@ namespace _Navi_Common_
     C* instance_;
     Method method_;
   };
+
 }
 
 #endif /* COMMON_DECLARE_H_ */
