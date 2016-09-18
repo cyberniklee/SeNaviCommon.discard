@@ -14,7 +14,14 @@ namespace _Navi_Common_
   Dispitcher::~Dispitcher ()
   {
     // TODO Auto-generated destructor stub
-
+    DataDictionaryIterator i, end;
+    boost::mutex::scoped_lock lock(data_dict_lock);
+    end = data_dictionary.end();
+    for(i = data_dictionary.begin(); i != end; ++i)
+    {
+      NaviDataItemPtr data_item_ptr = (*i).second;
+      data_item_ptr->stopProcess();
+    }
   }
   
   Dispitcher::Dispitcher ()
@@ -25,14 +32,6 @@ namespace _Navi_Common_
 
   bool Dispitcher::initialize()
   {
-    DataDictionaryIterator i, end;
-    boost::mutex::scoped_lock lock(data_dict_lock);
-    end = data_dictionary.end();
-    for(i = data_dictionary.begin(); i != end; ++i)
-    {
-      NaviDataItemPtr data_item_ptr = (*i).second;
-      data_item_ptr->stopProcess();
-    }
     return true;
   }
 
