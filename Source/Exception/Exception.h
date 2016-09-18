@@ -29,6 +29,7 @@
 #define _EXCEPTION_H_
 
 #include <stdexcept>
+#include "../Parameter/XMLParser.h"
 
 namespace _Navi_Common_
 {
@@ -58,6 +59,44 @@ namespace _Navi_Common_
     {
       this->message = exception.message;
       this->point_ = exception.point_;
+    };
+  };
+
+  class FileException
+  {
+  public:
+    std::string message;
+    std::string filename_;
+
+    FileException(const std::string& what, std::string& filename)
+    {
+      message = what;
+      filename_ = filename;
+    };
+
+    FileException(FileException& exception)
+    {
+      this->message = exception.message;
+      this->filename_ = exception.filename_;
+    };
+  };
+
+  class XMLException
+  {
+  public:
+    std::string message;
+    XMLNode node_;
+
+    XMLException(const std::string& what, XMLNode& node)
+    {
+      message = what;
+      node_ = node;
+    };
+
+    XMLException(XMLException& exception)
+    {
+      this->message = exception.message;
+      this->node_ = exception.node_;
     };
   };
 

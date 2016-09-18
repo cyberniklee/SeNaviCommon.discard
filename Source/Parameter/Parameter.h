@@ -13,6 +13,17 @@
 
 namespace _Navi_Common_
 {
+  /*
+   * configuration file sample
+   * <configuration>
+   *   <map_type value="cost_map"/>
+   *   <interval value="10.0"/>
+   *   <x_size value="100"/>
+   *
+   * </configuration>
+   */
+#define CONFIGURATION_COMMON_NODE_NAME "configuration"
+#define CONFIGURATION_COMMON_ATTRIBUTE_NAME "value"
   
   class Parameter
   {
