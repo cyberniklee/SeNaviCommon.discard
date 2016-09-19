@@ -8,7 +8,8 @@
 #ifndef _DECLARE_H_
 #define _DECLARE_H_
 
-#define HANDLE_DECLARE __attribute__ ((visibility("default")))
+//#define HANDLE_DECLARE __attribute__ ((visibility("default")))
+#define HANDLE_DECLARE
 
 namespace _Navi_Common_
 {

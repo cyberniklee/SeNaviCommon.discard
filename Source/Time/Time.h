@@ -180,43 +180,9 @@ namespace _Navi_Common_
   extern HANDLE_DECLARE const Duration DURATION_MAX;
   extern HANDLE_DECLARE const Duration DURATION_MIN;
   
-  /**
-   * \brief Duration representation for use with the WallTime class.
-   *
-   * ros::DurationBase provides most of its functionality.
-   */
-  class HANDLE_DECLARE WallDuration : public DurationBase<WallDuration>
-  {
-  public:
-    WallDuration () :
-        DurationBase<WallDuration> ()
-    {
-    }
-    
-    WallDuration (int32_t _sec, int32_t _nsec) :
-        DurationBase<WallDuration> (_sec, _nsec)
-    {
-    }
-    
-    explicit
-    WallDuration (double t)
-    {
-      fromSec (t);
-    }
-    explicit
-    WallDuration (const Rate&);
-    /**
-     * \brief sleep for the amount of time specified by this Duration.  If a signal interrupts the sleep, resleeps for the time remaining.
-     * @return True if the desired sleep duration was met, false otherwise.
-     */
-    bool
-    sleep () const;
-  };
   
   std::ostream &
   operator << (std::ostream &os, const Duration &rhs);
-  std::ostream &
-  operator << (std::ostream &os, const WallDuration &rhs);
   
   /*********************************************************************
    ** Time
@@ -420,11 +386,6 @@ namespace _Navi_Common_
      */
     static bool
     waitForValid ();
-    /**
-     * \brief Wait for time to become valid, with timeout
-     */
-    static bool
-    waitForValid (const WallDuration& timeout);
 
     static Time
     fromBoost (const boost::posix_time::ptime& t);
@@ -435,54 +396,8 @@ namespace _Navi_Common_
   extern HANDLE_DECLARE const Time TIME_MAX;
   extern HANDLE_DECLARE const Time TIME_MIN;
   
-  /**
-   * \brief Time representation.  Always wall-clock time.
-   *
-   * ros::TimeBase provides most of its functionality.
-   */
-  class HANDLE_DECLARE WallTime : public TimeBase<WallTime, WallDuration>
-  {
-  public:
-    WallTime () :
-        TimeBase<WallTime, WallDuration> ()
-    {
-    }
-    
-    WallTime (uint32_t _sec, uint32_t _nsec) :
-        TimeBase<WallTime, WallDuration> (_sec, _nsec)
-    {
-    }
-    
-    explicit
-    WallTime (double t)
-    {
-      fromSec (t);
-    }
-    
-    /**
-     * \brief Returns the current wall clock time.
-     */
-    static WallTime
-    now ();
-
-    /**
-     * \brief Sleep until a specific time has been reached.
-     * @return True if the desired sleep time was met, false otherwise.
-     */
-    static bool
-    sleepUntil (const WallTime& end);
-
-    static bool
-    isSystemTime ()
-    {
-      return true;
-    }
-  };
-  
   HANDLE_DECLARE std::ostream &
   operator << (std::ostream &os, const Time &rhs);
-  HANDLE_DECLARE std::ostream &
-  operator << (std::ostream &os, const WallTime &rhs);
   
   /*********************************************************************
    ** Rate
@@ -536,55 +451,6 @@ namespace _Navi_Common_
       return expected_cycle_time_;
     }
     
-  };
-  
-  /**
-   * @class WallRate
-   * @brief Class to help run loops at a desired frequency.  This version always uses wall-clock time.
-   */
-  class HANDLE_DECLARE WallRate
-  {
-  public:
-    /**
-     * @brief  Constructor, creates a Rate
-     * @param  frequency The desired rate to run at in Hz
-     */
-    WallRate (double frequency);
-    explicit
-    WallRate (const Duration&);
-
-    /**
-     * @brief  Sleeps for any leftover time in a cycle. Calculated from the last time sleep, reset, or the constructor was called.
-     * @return Passes through the return value from WallDuration::sleep() if it slept, false otherwise.
-     */
-    bool
-    sleep ();
-
-    /**
-     * @brief  Sets the start time for the rate to now
-     */
-    void
-    reset ();
-
-    /**
-     * @brief  Get the actual run time of a cycle from start to sleep
-     * @return The runtime of the cycle
-     */
-    WallDuration
-    cycleTime () const;
-
-    /**
-     * @brief Get the expected cycle time -- one over the frequency passed in to the constructor
-     */
-    WallDuration
-    expectedCycleTime () const
-    {
-      return expected_cycle_time_;
-    }
-    
-  private:
-    WallTime start_;
-    WallDuration expected_cycle_time_, actual_cycle_time_;
   };
 
 }

@@ -97,11 +97,7 @@ namespace _Navi_Common_
    */
   void
   ros_walltime (uint32_t& sec, uint32_t& nsec)
-#ifndef WIN32    
-                    throw (NoHighPerformanceTimersException)
-#endif
   {
-#ifndef WIN32
 #if HAS_CLOCK_GETTIME
     timespec start;
     clock_gettime (CLOCK_REALTIME, &start);
@@ -113,63 +109,6 @@ namespace _Navi_Common_
     sec = timeofday.tv_sec;
     nsec = timeofday.tv_usec * 1000;
 #endif
-#else
-    // Win32 implementation
-    // unless I've missed something obvious, the only way to get high-precision
-    // time on Windows is via the QueryPerformanceCounter() call. However,
-    // this is somewhat problematic in Windows XP on some processors, especially
-    // AMD, because the Windows implementation can freak out when the CPU clocks
-    // down to save power. Time can jump or even go backwards. Microsoft has
-    // fixed this bug for most systems now, but it can still show up if you have
-    // not installed the latest CPU drivers (an oxymoron). They fixed all these
-    // problems in Windows Vista, and this API is by far the most accurate that
-    // I know of in Windows, so I'll use it here despite all these caveats
-    static LARGE_INTEGER cpu_freq, init_cpu_time;
-    static uint32_t start_sec = 0;
-    static uint32_t start_nsec = 0;
-    if ( ( start_sec == 0 ) && ( start_nsec == 0 ) )
-    { 
-      QueryPerformanceFrequency(&cpu_freq);
-      if (cpu_freq.QuadPart == 0)
-      { 
-        throw NoHighPerformanceTimersException();
-      }
-      QueryPerformanceCounter(&init_cpu_time);
-      // compute an offset from the Epoch using the lower-performance timer API
-      FILETIME ft;
-      GetSystemTimeAsFileTime(&ft);
-      LARGE_INTEGER start_li;
-      start_li.LowPart = ft.dwLowDateTime;
-      start_li.HighPart = ft.dwHighDateTime;
-      // why did they choose 1601 as the time zero, instead of 1970?
-      // there were no outstanding hard rock bands in 1601.
-#ifdef _MSC_VER
-      start_li.QuadPart -= 116444736000000000Ui64;
-#else
-      start_li.QuadPart -= 116444736000000000ULL;
-#endif
-      start_sec = (uint32_t)(start_li.QuadPart / 10000000); // 100-ns units. odd.
-      start_nsec = (start_li.LowPart % 10000000) * 100;
-    }
-    LARGE_INTEGER cur_time;
-    QueryPerformanceCounter(&cur_time);
-    LARGE_INTEGER delta_cpu_time;
-    delta_cpu_time.QuadPart = cur_time.QuadPart - init_cpu_time.QuadPart;
-    // todo: how to handle cpu clock drift. not sure it's a big deal for us.
-    // also, think about clock wraparound. seems extremely unlikey, but possible
-    double d_delta_cpu_time = delta_cpu_time.QuadPart / (double) cpu_freq.QuadPart;
-    uint32_t delta_sec = (uint32_t) floor(d_delta_cpu_time);
-    uint32_t delta_nsec = (uint32_t) boost::math::round((d_delta_cpu_time-delta_sec) * 1e9);
-
-    int64_t sec_sum = (int64_t)start_sec + (int64_t)delta_sec;
-    int64_t nsec_sum = (int64_t)start_nsec + (int64_t)delta_nsec;
-
-    // Throws an exception if we go out of 32-bit range
-    normalizeSecNSecUnsigned(sec_sum, nsec_sum);
-
-    sec = sec_sum;
-    nsec = nsec_sum;
-#endif
   }
   /**
    * @brief Simple representation of the rt library nanosleep function.
@@ -177,34 +116,11 @@ namespace _Navi_Common_
   int
   ros_nanosleep (const uint32_t &sec, const uint32_t &nsec)
   {
-#if defined(WIN32)
-    HANDLE timer = NULL;
-    LARGE_INTEGER sleepTime;
-    sleepTime.QuadPart = -
-    static_cast<int64_t>(sec)*10000000LL -
-    static_cast<int64_t>(nsec) / 100LL;
 
-    timer = CreateWaitableTimer(NULL, TRUE, NULL);
-    if (timer == NULL)
-    { 
-      return -1;
-    }
-
-    if (!SetWaitableTimer (timer, &sleepTime, 0, NULL, NULL, 0))
-    { 
-      return -1;
-    }
-
-    if (WaitForSingleObject (timer, INFINITE) != WAIT_OBJECT_0)
-    { 
-      return -1;
-    }
-    return 0;
-#else
     timespec req =
       { sec, nsec };
     return nanosleep (&req, NULL);
-#endif
+
   }
   
   /**
@@ -215,9 +131,6 @@ namespace _Navi_Common_
   bool
   ros_wallsleep (uint32_t sec, uint32_t nsec)
   {
-#if defined(WIN32)
-    ros_nanosleep(sec,nsec);
-#else
     timespec req =
       { sec, nsec };
     timespec rem =
@@ -226,7 +139,6 @@ namespace _Navi_Common_
     {
       req = rem;
     }
-#endif
     return !g_stopped;
   }
   
@@ -300,34 +212,6 @@ namespace _Navi_Common_
   Time::isValid ()
   {
     return (!g_use_sim_time) || !g_sim_time.isZero ();
-  }
-  
-  bool
-  Time::waitForValid ()
-  {
-    return waitForValid (WallDuration ());
-  }
-  
-  bool
-  Time::waitForValid (const WallDuration& timeout)
-  {
-    WallTime start = WallTime::now ();
-    while (!isValid () && !g_stopped)
-    {
-      WallDuration (0.01).sleep ();
-      
-      if (timeout > WallDuration (0, 0) && (WallTime::now () - start > timeout))
-      {
-        return false;
-      }
-    }
-    
-    if (g_stopped)
-    {
-      return false;
-    }
-    
-    return true;
   }
   
   Time
@@ -405,18 +289,6 @@ namespace _Navi_Common_
   }
   
   bool
-  WallTime::sleepUntil (const WallTime& end)
-  {
-    WallDuration d (end - WallTime::now ());
-    if (d > WallDuration (0))
-    {
-      return d.sleep ();
-    }
-    
-    return true;
-  }
-  
-  bool
   Duration::sleep () const
   {
     if (Time::useSystemTime ())
@@ -455,45 +327,6 @@ namespace _Navi_Common_
       
       return rc && !g_stopped;
     }
-  }
-  
-  std::ostream &
-  operator<< (std::ostream& os, const WallTime &rhs)
-  {
-    boost::io::ios_all_saver s (os);
-    os << rhs.sec << "." << std::setw (9) << std::setfill ('0') << rhs.nsec;
-    return os;
-  }
-  
-  WallTime
-  WallTime::now ()
-  {
-    WallTime t;
-    ros_walltime (t.sec, t.nsec);
-    
-    return t;
-  }
-  
-  std::ostream &
-  operator<< (std::ostream& os, const WallDuration& rhs)
-  {
-    boost::io::ios_all_saver s (os);
-    if (rhs.sec >= 0 || rhs.nsec == 0)
-    {
-      os << rhs.sec << "." << std::setw (9) << std::setfill ('0') << rhs.nsec;
-    }
-    else
-    {
-      os << (rhs.sec == -1 ? "-" : "") << (rhs.sec + 1) << "." << std::setw (9)
-          << std::setfill ('0') << (1000000000 - rhs.nsec);
-    }
-    return os;
-  }
-  
-  bool
-  WallDuration::sleep () const
-  {
-    return ros_wallsleep (sec, nsec);
   }
   
   void
@@ -540,7 +373,6 @@ namespace _Navi_Common_
   }
   
   template class TimeBase<Time, Duration> ;
-  template class TimeBase<WallTime, WallDuration> ;
   
   /******************************************************************
    * Rate
@@ -608,81 +440,14 @@ namespace _Navi_Common_
     return actual_cycle_time_;
   }
   
-  WallRate::WallRate (double frequency) :
-      start_ (WallTime::now ()), expected_cycle_time_ (1.0 / frequency),
-          actual_cycle_time_ (0.0)
-  {
-  }
-  
-  WallRate::WallRate (const Duration& d) :
-      start_ (WallTime::now ()), expected_cycle_time_ (d.sec, d.nsec),
-          actual_cycle_time_ (0.0)
-  {
-  }
-  
-  bool
-  WallRate::sleep ()
-  {
-    WallTime expected_end = start_ + expected_cycle_time_;
-    
-    WallTime actual_end = WallTime::now ();
-    
-    // detect backward jumps in time
-    if (actual_end < start_)
-    {
-      expected_end = actual_end + expected_cycle_time_;
-    }
-    
-    //calculate the time we'll sleep for
-    WallDuration sleep_time = expected_end - actual_end;
-    
-    //set the actual amount of time the loop took in case the user wants to know
-    actual_cycle_time_ = actual_end - start_;
-    
-    //make sure to reset our start time
-    start_ = expected_end;
-    
-    //if we've taken too much time we won't sleep
-    if (sleep_time <= WallDuration (0.0))
-    {
-      // if we've jumped forward in time, or the loop has taken more than a full extra
-      // cycle, reset our cycle
-      if (actual_end > expected_end + expected_cycle_time_)
-      {
-        start_ = actual_end;
-      }
-      return false;
-    }
-    
-    return sleep_time.sleep ();
-  }
-  
-  void
-  WallRate::reset ()
-  {
-    start_ = WallTime::now ();
-  }
-  
-  WallDuration
-  WallRate::cycleTime () const
-  {
-    return actual_cycle_time_;
-  }
-  
   /******************************************************************
    * Duration
    *****************************************************************/
-  /*
    Duration::Duration(const Rate& rate) : DurationBase<Duration>(rate.expectedCycleTime().sec, rate.expectedCycleTime().nsec)
    {
 
    }
 
-   WallDuration::WallDuration(const Rate& rate) : DurationBase<WallDuration>(rate.expectedCycleTime().sec, rate.expectedCycleTime().nsec)
-   {
-
-   }
-   */
   void
   normalizeSecNSecSigned (int64_t& sec, int64_t& nsec)
   {
@@ -714,7 +479,256 @@ namespace _Navi_Common_
   }
   
   template class DurationBase<Duration> ;
-  template class DurationBase<WallDuration> ;
+
+  template<class T, class D>
+  T& TimeBase<T, D>::fromNSec(uint64_t t)
+  {
+    uint64_t sec64 = 0;
+    uint64_t nsec64 = t;
+
+    normalizeSecNSec(sec64, nsec64);
+
+    sec = (uint32_t)sec64;
+    nsec = (uint32_t)nsec64;
+
+    return *static_cast<T*>(this);
+  }
+
+  template<class T, class D>
+  D TimeBase<T, D>::operator-(const T &rhs) const
+  {
+    return D((int32_t)sec -  (int32_t)rhs.sec,
+             (int32_t)nsec - (int32_t)rhs.nsec); // carry handled in ctor
+  }
+
+  template<class T, class D>
+  T TimeBase<T, D>::operator-(const D &rhs) const
+  {
+    return *static_cast<const T*>(this) + ( -rhs);
+  }
+
+  template<class T, class D>
+  T TimeBase<T, D>::operator+(const D &rhs) const
+  {
+    int64_t sec_sum  = (int64_t)sec  + (int64_t)rhs.sec;
+    int64_t nsec_sum = (int64_t)nsec + (int64_t)rhs.nsec;
+
+    // Throws an exception if we go out of 32-bit range
+    normalizeSecNSecUnsigned(sec_sum, nsec_sum);
+
+    // now, it's safe to downcast back to uint32 bits
+    return T((uint32_t)sec_sum, (uint32_t)nsec_sum);
+  }
+
+  template<class T, class D>
+  T& TimeBase<T, D>::operator+=(const D &rhs)
+  {
+    *this = *this + rhs;
+    return *static_cast<T*>(this);
+  }
+
+  template<class T, class D>
+  T& TimeBase<T, D>::operator-=(const D &rhs)
+  {
+    *this += (-rhs);
+    return *static_cast<T*>(this);
+  }
+
+  template<class T, class D>
+  bool TimeBase<T, D>::operator==(const T &rhs) const
+  {
+    return sec == rhs.sec && nsec == rhs.nsec;
+  }
+
+  template<class T, class D>
+  bool TimeBase<T, D>::operator<(const T &rhs) const
+  {
+    if (sec < rhs.sec)
+      return true;
+    else if (sec == rhs.sec && nsec < rhs.nsec)
+      return true;
+    return false;
+  }
+
+  template<class T, class D>
+  bool TimeBase<T, D>::operator>(const T &rhs) const
+  {
+    if (sec > rhs.sec)
+      return true;
+    else if (sec == rhs.sec && nsec > rhs.nsec)
+      return true;
+    return false;
+  }
+
+  template<class T, class D>
+  bool TimeBase<T, D>::operator<=(const T &rhs) const
+  {
+    if (sec < rhs.sec)
+      return true;
+    else if (sec == rhs.sec && nsec <= rhs.nsec)
+      return true;
+    return false;
+  }
+
+  template<class T, class D>
+  bool TimeBase<T, D>::operator>=(const T &rhs) const
+  {
+    if (sec > rhs.sec)
+      return true;
+    else if (sec == rhs.sec && nsec >= rhs.nsec)
+      return true;
+    return false;
+  }
+
+  template<class T, class D>
+  boost::posix_time::ptime
+  TimeBase<T, D>::toBoost() const
+  {
+    namespace pt = boost::posix_time;
+#if defined(BOOST_DATE_TIME_HAS_NANOSECONDS)
+    return pt::from_time_t(sec) + pt::nanoseconds(nsec);
+#else
+    return pt::from_time_t(sec) + pt::microseconds(nsec/1000.0);
+#endif
+  }
+
+  //
+  // DurationBase template member function implementation
+  //
+  template<class T>
+  DurationBase<T>::DurationBase(int32_t _sec, int32_t _nsec)
+  : sec(_sec), nsec(_nsec)
+  {
+    normalizeSecNSecSigned(sec, nsec);
+  }
+
+  template<class T>
+  T& DurationBase<T>::fromSec(double d)
+  {
+    sec = (int32_t)floor(d);
+    nsec = (int32_t)((d - (double)sec)*1000000000);
+    return *static_cast<T*>(this);
+  }
+
+  template<class T>
+  T& DurationBase<T>::fromNSec(int64_t t)
+  {
+    sec  = (int32_t)(t / 1000000000);
+    nsec = (int32_t)(t % 1000000000);
+
+    normalizeSecNSecSigned(sec, nsec);
+
+    return *static_cast<T*>(this);
+  }
+
+  template<class T>
+  T DurationBase<T>::operator+(const T &rhs) const
+  {
+    return T(sec + rhs.sec, nsec + rhs.nsec);
+  }
+
+  template<class T>
+  T DurationBase<T>::operator*(double scale) const
+  {
+    return T(toSec() * scale);
+  }
+
+  template<class T>
+  T DurationBase<T>::operator-(const T &rhs) const
+  {
+    return T(sec - rhs.sec, nsec - rhs.nsec);
+  }
+
+  template<class T>
+  T DurationBase<T>::operator-() const
+  {
+    return T(-sec , -nsec);
+  }
+
+  template<class T>
+  T& DurationBase<T>::operator+=(const T &rhs)
+  {
+    *this = *this + rhs;
+    return *static_cast<T*>(this);
+  }
+
+  template<class T>
+  T& DurationBase<T>::operator-=(const T &rhs)
+  {
+    *this += (-rhs);
+    return *static_cast<T*>(this);
+  }
+
+  template<class T>
+  T& DurationBase<T>::operator*=(double scale)
+  {
+    fromSec(toSec() * scale);
+    return *static_cast<T*>(this);
+  }
+
+  template<class T>
+  bool DurationBase<T>::operator<(const T &rhs) const
+  {
+    if (sec < rhs.sec)
+      return true;
+    else if (sec == rhs.sec && nsec < rhs.nsec)
+      return true;
+    return false;
+  }
+
+  template<class T>
+  bool DurationBase<T>::operator>(const T &rhs) const
+  {
+    if (sec > rhs.sec)
+      return true;
+    else if (sec == rhs.sec && nsec > rhs.nsec)
+      return true;
+    return false;
+  }
+
+  template<class T>
+  bool DurationBase<T>::operator<=(const T &rhs) const
+  {
+    if (sec < rhs.sec)
+      return true;
+    else if (sec == rhs.sec && nsec <= rhs.nsec)
+      return true;
+    return false;
+  }
+
+  template<class T>
+  bool DurationBase<T>::operator>=(const T &rhs) const
+  {
+    if (sec > rhs.sec)
+      return true;
+    else if (sec == rhs.sec && nsec >= rhs.nsec)
+      return true;
+    return false;
+  }
+
+  template<class T>
+  bool DurationBase<T>::operator==(const T &rhs) const
+  {
+    return sec == rhs.sec && nsec == rhs.nsec;
+  }
+
+  template<class T>
+  bool DurationBase<T>::isZero() const
+  {
+    return sec == 0 && nsec == 0;
+  }
+
+  template <class T>
+  boost::posix_time::time_duration
+  DurationBase<T>::toBoost() const
+  {
+    namespace bt = boost::posix_time;
+#if defined(BOOST_DATE_TIME_HAS_NANOSECONDS)
+    return bt::seconds(sec) + bt::nanoseconds(nsec);
+#else
+    return bt::seconds(sec) + bt::microseconds(nsec/1000.0);
+#endif
+  }
 
 }
 
