@@ -9,53 +9,64 @@
 #define _DATAPROCESSQUEUE_H_
 
 #include <boost/thread/thread.hpp>
+#include <boost/function.hpp>
 #include "DataQueue.h"
 #include "../Time/Time.h"
 #include "../Common/Declare.h"
 
 namespace _Navi_Common_
 {
+  #define DEFAULT_DATA_PROCESS_RATE 10.0
 
-  template <class M, class C, typename R, typename P>
-  class DataProcessQueue : public DataQueue<M>
+  class DataProcessQueue : public DataQueue
   {
-  public:
-    DataProcessQueue ()
-    {
-      process_frequency = 0.1;
-    };
-    DataProcessQueue (CallbackClass<C, R, P>* callback)
-    {
-      process_frequency = 0.1;
-      this->callback_ = callback;
-    };
-    virtual
-    ~DataProcessQueue ();
   private:
     bool running;
     double process_frequency;
-    CallbackClass<C, R, P>* callback_;
+
+    boost::function<void (DataBase*)> callback_;
 
     boost::thread* process_thread_handle;
 
     void DataProcessThread()
     {
       Rate rate(this->process_frequency);
-      if(running)
+      while(running)
       {
         if(!this->isEmpty())
         {
-          M* m = this->front();
-          this->callback_->execute(m);
+          DataBase* m = this->front();
+          this->callback_(m);
         }
         rate.sleep();
       }
     };
+    /*
   public:
+    DataProcessQueue ()
+    {
+      //this->process_frequency = 0.1;
+    };
+
+    virtual
+    ~DataProcessQueue ();
+    */
+
+  public:
+    void setCallback(boost::function<void (DataBase*)> callback)
+    {
+      this->callback_ = callback;
+    };
+
+    void setFrequency(double frequency)
+    {
+      this->process_frequency = frequency;
+    };
+
     void startProcess()
     {
       running = true;
-      process_thread_handle = new boost::thread(boost::bind(DataProcessThread, this));
+      process_thread_handle = new boost::thread(boost::bind(&DataProcessQueue::DataProcessThread, this));
     };
 
     void stopProcess()

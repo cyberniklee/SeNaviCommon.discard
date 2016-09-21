@@ -10,7 +10,7 @@
 
 namespace _Navi_Common_
 {
-  
+  /*
   Dispitcher::~Dispitcher ()
   {
     // TODO Auto-generated destructor stub
@@ -43,7 +43,7 @@ namespace _Navi_Common_
     ranger = data_dictionary.equal_range(publish_type);
     for(DataDictionaryIterator it = ranger.first; it != ranger.second; ++it)
     {
-      NaviDataItemPtr data_item_ptr = it->second;
+      DataProcessQueue<M>* data_item_ptr = it->second;
       if(data_item_ptr == NULL)
       {
         throw NullPointException("Data item point is null!", data_item_ptr);
@@ -54,8 +54,8 @@ namespace _Navi_Common_
     return true;
   }
 
-  template <class M, class C, typename R, typename P>
-  bool Dispitcher::subscribe(NaviDataTypes subscribe_type, CallbackClass<C, R, P>* callback)
+  template <typename M>
+  bool Dispitcher::subscribe(NaviDataTypes subscribe_type, boost::function<void(M)> callback)
   {
     boost::mutex::scoped_lock lock(data_dict_lock);
     DataQueue<M>* queue = new DataQueue<M>;
@@ -64,7 +64,7 @@ namespace _Navi_Common_
       throw NullPointException("Create queue fail!", queue);
       return false;
     }
-    NaviDataItemPtr data_item_ptr = new DataProcessQueue<M, C, R, P>(callback);
+    NaviDataItemPtr data_item_ptr = new DataProcessQueue<M>(callback);
     if(data_item_ptr == NULL)
     {
       throw NullPointException("Create data item fail!", data_item_ptr);
@@ -74,5 +74,5 @@ namespace _Navi_Common_
     data_dictionary.insert(std::pair<NaviDataTypes, NaviDataItemPtr>(subscribe_type, data_item_ptr));
     return true;
   }
-
+*/
 } /* namespace _Navi_Common_ */

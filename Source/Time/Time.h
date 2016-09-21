@@ -65,9 +65,9 @@ namespace _Navi_Common_
   /*********************************************************************
    ** Duration
    *********************************************************************/
-  HANDLE_DECLARE void
+   void
   normalizeSecNSecSigned (int64_t& sec, int64_t& nsec);
-  HANDLE_DECLARE void
+   void
   normalizeSecNSecSigned (int32_t& sec, int32_t& nsec);
   
   /**
@@ -149,7 +149,7 @@ namespace _Navi_Common_
    *
    * ros::DurationBase provides most of its functionality.
    */
-  class HANDLE_DECLARE Duration : public DurationBase<Duration>
+  class  Duration : public DurationBase<Duration>
   {
   public:
     Duration () :
@@ -177,8 +177,8 @@ namespace _Navi_Common_
     sleep () const;
   };
   
-  extern HANDLE_DECLARE const Duration DURATION_MAX;
-  extern HANDLE_DECLARE const Duration DURATION_MIN;
+  extern  const Duration DURATION_MAX;
+  extern  const Duration DURATION_MIN;
   
   
   std::ostream &
@@ -190,13 +190,13 @@ namespace _Navi_Common_
   /**
    * @brief Thrown if the ros subsystem hasn't been initialised before use.
    */
-  class HANDLE_DECLARE TimeNotInitializedException : public Exception
+  class  TimeNotInitializedException : public Exception
   {
   public:
     TimeNotInitializedException () :
             Exception (
-                "Cannot use ros::Time::now() before the first NodeHandle has been created or ros::start() has been called.  "
-                "If this is a standalone app or test that just uses ros::Time and does not communicate over ROS, you may also call ros::Time::init()")
+                "Cannot use Time::now() before the first NodeHandle has been created.  "
+                "If this is a standalone app or test that just uses Time, you may also call Time::init()")
     {
     }
   };
@@ -206,7 +206,7 @@ namespace _Navi_Common_
    *
    * @sa getWallTime
    */
-  class HANDLE_DECLARE NoHighPerformanceTimersException : public Exception
+  class  NoHighPerformanceTimersException : public Exception
   {
   public:
     NoHighPerformanceTimersException () :
@@ -220,11 +220,11 @@ namespace _Navi_Common_
    ** Functions
    *********************************************************************/
 
-  HANDLE_DECLARE void
+   void
   normalizeSecNSec (uint64_t& sec, uint64_t& nsec);
-  HANDLE_DECLARE void
+   void
   normalizeSecNSec (uint32_t& sec, uint32_t& nsec);
-  HANDLE_DECLARE void
+   void
   normalizeSecNSecUnsigned (int64_t& sec, int64_t& nsec);
   
   /*********************************************************************
@@ -329,7 +329,7 @@ namespace _Navi_Common_
    *
    * ros::TimeBase provides most of its functionality.
    */
-  class HANDLE_DECLARE Time : public TimeBase<Time, Duration>
+  class  Time : public TimeBase<Time, Duration>
   {
   public:
     Time () :
@@ -393,10 +393,10 @@ namespace _Navi_Common_
     fromBoost (const boost::posix_time::time_duration& d);
   };
   
-  extern HANDLE_DECLARE const Time TIME_MAX;
-  extern HANDLE_DECLARE const Time TIME_MIN;
+  extern  const Time TIME_MAX;
+  extern  const Time TIME_MIN;
   
-  HANDLE_DECLARE std::ostream &
+   std::ostream &
   operator << (std::ostream &os, const Time &rhs);
   
   /*********************************************************************
@@ -407,7 +407,7 @@ namespace _Navi_Common_
    * @class Rate
    * @brief Class to help run loops at a desired frequency
    */
-  class HANDLE_DECLARE Rate
+  class  Rate
   {
   private:
     Time start_;

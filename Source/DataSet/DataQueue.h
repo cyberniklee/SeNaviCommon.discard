@@ -12,10 +12,10 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/mutex.hpp>
 #include "../Exception/Exception.h"
+#include "DataType/DataBase.h"
 
 namespace _Navi_Common_
 {
-  template <class M>
   class DataQueue
   {
   public:
@@ -27,29 +27,29 @@ namespace _Navi_Common_
     {
       this->capacity_ = capacity;
     };
-    ~DataQueue()
+    virtual ~DataQueue()
     {};
 
   private:
     boost::mutex data_queue_lock;
-    std::queue<M*> data_queue;
+    std::queue<DataBase*> data_queue;
     int capacity_;
 
   public:
-    void append(M* item)
+    void append(DataBase* item)
     {
       boost::mutex::scoped_lock lock(data_queue_lock);
       if(data_queue.size() >= capacity_)
       {
-        throw DataQueueException("Data queue is full!");
+        //throw DataQueueException("Data queue is full!");
         return;
       }
       data_queue.push(item);
     };
 
-    M* front()
+    DataBase* front()
     {
-      M* item;
+      DataBase* item;
       boost::mutex::scoped_lock lock(data_queue_lock);
       item = data_queue.front();
       data_queue.pop();
