@@ -14,9 +14,10 @@ namespace _Navi_Common_
   class DataBase
   {
   public:
-    DataBase ();
+    DataBase ()
+    {};
     virtual
-    ~DataBase ();
+    ~DataBase () = 0;
   };
 
 } /* namespace _Navi_Common_ */
