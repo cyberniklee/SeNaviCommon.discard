@@ -21,11 +21,5 @@ namespace _Navi_Common_
   {
     
   }
-  
-  void
-  assert (bool expression)
-  {
-    
-  }
 
 } /* namespace _Navi_Common_ */
