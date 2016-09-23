@@ -4,6 +4,7 @@
 
 #include <ostream>
 
+
 namespace _Navi_Common_
 {
 
