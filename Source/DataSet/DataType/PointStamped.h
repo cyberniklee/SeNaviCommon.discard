@@ -9,6 +9,7 @@
 #define _POINTSTAMPED_H_
 
 #include "DataBase.h"
+#include "DataHeader.h"
 #include "../../Geometry/Point.h"
 
 namespace _Navi_Common_

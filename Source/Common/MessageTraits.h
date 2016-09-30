@@ -10,9 +10,12 @@
 #include <boost/type_traits/remove_reference.hpp>
 #include "MessageForward.h"
 
-namespace std_msgs
+namespace _Navi_Common_
 {
-  DECLARE_MESSAGE(Header);
+  namespace _Std_data_
+  {
+    DECLARE_MESSAGE(Header);
+  }
 }
 
 #define IMPLEMENT_SIMPLE_TOPIC_TRAITS(msg, md5sum, datatype, definition) \
@@ -136,15 +139,15 @@ struct Definition
 template<typename M, typename Enable = void>
 struct Header
 {
-  static std_msgs::Header* pointer(M& m) { (void)m; return 0; }
-  static std_msgs::Header const* pointer(const M& m) { (void)m; return 0; }
+  static _Std_data_::Header* pointer(M& m) { (void)m; return 0; }
+  static _Std_data_::Header const* pointer(const M& m) { (void)m; return 0; }
 };
 
 template<typename M>
 struct Header<M, typename boost::enable_if<HasHeader<M> >::type >
 {
-  static std_msgs::Header* pointer(M& m) { return &m.header; }
-  static std_msgs::Header const* pointer(const M& m) { return &m.header; }
+  static _Std_data_::Header* pointer(M& m) { return &m.header; }
+  static _Std_data_::Header const* pointer(const M& m) { return &m.header; }
 };
 
 /**
@@ -245,7 +248,7 @@ inline const char* definition(const M& m)
  * \brief returns Header<M>::pointer(m);
  */
 template<typename M>
-inline std_msgs::Header* header(M& m)
+inline _Std_data_::Header* header(M& m)
 {
   return Header<typename boost::remove_reference<typename boost::remove_const<M>::type>::type>::pointer(m);
 }
@@ -254,7 +257,7 @@ inline std_msgs::Header* header(M& m)
  * \brief returns Header<M>::pointer(m);
  */
 template<typename M>
-inline std_msgs::Header const* header(const M& m)
+inline _Std_data_::Header const* header(const M& m)
 {
   return Header<typename boost::remove_reference<typename boost::remove_const<M>::type>::type>::pointer(m);
 }

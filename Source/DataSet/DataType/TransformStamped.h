@@ -9,6 +9,7 @@
 #define _TRANSFORMSTAMPED_H_
 
 #include "DataBase.h"
+#include "DataHeader.h"
 #include "Transform.h"
 
 namespace _Navi_Common_

@@ -10,6 +10,7 @@
 
 
 #include "DataBase.h"
+#include "DataHeader.h"
 #include "Pose.h"
 
 namespace _Navi_Common_

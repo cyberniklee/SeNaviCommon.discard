@@ -9,6 +9,7 @@
 #define _VECTOR3STAMPED_H_
 
 #include "DataBase.h"
+#include "DataHeader.h"
 #include "../../Geometry/Vector3.h"
 
 namespace _Navi_Common_

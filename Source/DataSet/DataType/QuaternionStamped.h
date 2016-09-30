@@ -11,6 +11,7 @@
 
 
 #include "DataBase.h"
+#include "DataHeader.h"
 #include "../../Geometry/Quaternion.h"
 
 namespace _Navi_Common_

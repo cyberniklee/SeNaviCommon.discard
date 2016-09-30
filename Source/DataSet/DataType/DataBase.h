@@ -17,7 +17,8 @@ namespace _Navi_Common_
     DataBase ()
     {};
     virtual
-    ~DataBase () = 0;
+    ~DataBase ()
+    {};
   };
 
 } /* namespace _Navi_Common_ */

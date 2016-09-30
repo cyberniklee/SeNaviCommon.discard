@@ -9,17 +9,5 @@
 
 namespace _Navi_Common_
 {
-  
-  void
-  printMessage (const char* message, ...)
-  {
-    
-  }
-  
-  void
-  printError (const char* error, ...)
-  {
-    
-  }
 
 } /* namespace _Navi_Common_ */
