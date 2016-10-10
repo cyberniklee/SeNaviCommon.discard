@@ -14,7 +14,7 @@
 #include <list>
 #include <deque>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 /**

@@ -5,7 +5,7 @@
 #include "../Callbacks/CallbackQueue.h"
 #include "../Common/Forwards.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 /**

@@ -8,7 +8,7 @@
 #ifndef _REQUESTBASE_H_
 #define _REQUESTBASE_H_
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   
   class RequestBase
@@ -19,6 +19,6 @@ namespace _Navi_Common_
     ~RequestBase (){};
   };
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* _REQUESTBASE_H_ */

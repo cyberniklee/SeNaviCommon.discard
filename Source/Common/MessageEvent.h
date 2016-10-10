@@ -16,7 +16,7 @@
 #include <boost/function.hpp>
 #include <boost/make_shared.hpp>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 template<typename M>

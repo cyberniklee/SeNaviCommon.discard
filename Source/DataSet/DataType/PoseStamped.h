@@ -13,7 +13,7 @@
 #include "DataHeader.h"
 #include "Pose.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
   template <class ContainerAllocator>

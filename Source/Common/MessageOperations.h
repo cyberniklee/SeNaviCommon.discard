@@ -4,7 +4,7 @@
 
 #include <ostream>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 template<typename M>

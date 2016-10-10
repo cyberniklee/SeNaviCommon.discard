@@ -16,7 +16,7 @@
 #include "ServiceType/RequestBase.h"
 #include "ServiceType/ResponseBase.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   
   typedef enum
@@ -71,6 +71,6 @@ namespace _Navi_Common_
     };
   };
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* SERVICE_SERVICE_H_ */

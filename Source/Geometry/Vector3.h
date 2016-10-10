@@ -13,7 +13,7 @@
 #include <ostream>
 #include <boost/shared_ptr.hpp>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
   template <class ContainerAllocator>
@@ -42,7 +42,7 @@ namespace _Navi_Common_
   typedef boost::shared_ptr<Vector3> Vector3Ptr;
   typedef boost::shared_ptr<Vector3 const> Vector3ConstPtr;
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 
 

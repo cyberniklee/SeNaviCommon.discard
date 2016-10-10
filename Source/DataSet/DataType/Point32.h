@@ -13,7 +13,7 @@
 #include "../../Time/Time.h"
 #include "DataBase.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   template <class ContainerAllocator>
   struct Point32_ : public DataBase
@@ -39,7 +39,7 @@ namespace _Navi_Common_
   typedef boost::shared_ptr<Point32> Point32Ptr;
   typedef boost::shared_ptr<Point32 const> Point32ConstPtr;
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 
 

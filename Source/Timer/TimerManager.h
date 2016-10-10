@@ -17,7 +17,7 @@
 #include <vector>
 #include <list>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 template<class T, class D, class E>

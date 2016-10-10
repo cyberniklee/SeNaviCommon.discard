@@ -24,7 +24,7 @@ namespace boost
   }
 }
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   
   class Rate;

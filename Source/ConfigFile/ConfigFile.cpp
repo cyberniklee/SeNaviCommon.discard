@@ -9,7 +9,7 @@
 #include <ctype.h>
 #include "ConfigFile.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 using namespace std;

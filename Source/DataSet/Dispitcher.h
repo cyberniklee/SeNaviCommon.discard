@@ -15,7 +15,7 @@
 #include "DataProcessQueue.h"
 #include "../Common/Declare.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
   typedef enum
@@ -107,6 +107,6 @@ namespace _Navi_Common_
     };
   };
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* _DISPITCHER_H_ */

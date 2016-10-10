@@ -7,7 +7,7 @@
 
 #include "DataQueue.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */

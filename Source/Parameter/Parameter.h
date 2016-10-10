@@ -11,7 +11,7 @@
 #include <string>
 #include "XMLParser.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   /*
    * configuration file sample
@@ -44,6 +44,6 @@ namespace _Navi_Common_
     float getParameter(const std::string node_name, const float default_value);
   };
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* _PARAMETER_H_ */

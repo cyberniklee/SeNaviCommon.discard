@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include "../Exception/Exception.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   
   Parameter::Parameter ()
@@ -81,4 +81,4 @@ namespace _Navi_Common_
     return atof(value.c_str());
   }
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */

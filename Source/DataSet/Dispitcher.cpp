@@ -8,7 +8,7 @@
 #include "Dispitcher.h"
 #include "../Console/Console.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   /*
   Dispitcher::~Dispitcher ()
@@ -75,4 +75,4 @@ namespace _Navi_Common_
     return true;
   }
 */
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */

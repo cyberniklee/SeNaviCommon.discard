@@ -10,7 +10,7 @@
 #include <boost/type_traits/remove_reference.hpp>
 #include "MessageForward.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   namespace _Std_data_
   {
@@ -19,7 +19,7 @@ namespace _Navi_Common_
 }
 
 #define IMPLEMENT_SIMPLE_TOPIC_TRAITS(msg, md5sum, datatype, definition) \
-  namespace _Navi_Common_ \
+  namespace NS_NaviCommon \
   { \
   template<> struct MD5Sum<msg> \
   { \
@@ -39,7 +39,7 @@ namespace _Navi_Common_
   }
 
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 /**

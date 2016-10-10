@@ -13,7 +13,7 @@
 #include <ostream>
 #include <boost/shared_ptr.hpp>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   
   template <class ContainerAllocator>
@@ -42,6 +42,6 @@ namespace _Navi_Common_
   typedef boost::shared_ptr<Quaternion> QuaternionPtr;
   typedef boost::shared_ptr<Quaternion const> QuaternionConstPtr;
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* GEOMETRY_QUATERNION_H_ */

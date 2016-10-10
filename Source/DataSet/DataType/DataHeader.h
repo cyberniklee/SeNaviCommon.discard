@@ -7,7 +7,7 @@
 #include "../../Time/Time.h"
 #include "DataBase.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   template <class ContainerAllocator>
   struct DataHeader_ : public DataBase
@@ -36,6 +36,6 @@ namespace _Navi_Common_
   typedef boost::shared_ptr<DataHeader> DataHeaderPtr;
   typedef boost::shared_ptr<DataHeader const> DataHeaderConstPtr;
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* _DATAHEADER_H_ */

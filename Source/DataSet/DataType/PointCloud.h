@@ -13,7 +13,7 @@
 #include "Point32.h"
 #include "ChannelFloat32.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
   template <class ContainerAllocator>

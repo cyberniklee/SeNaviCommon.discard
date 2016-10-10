@@ -31,7 +31,7 @@
 #include <stdexcept>
 #include "../Parameter/XMLParser.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   
   class Exception : public std::runtime_error

@@ -17,7 +17,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   typedef std::vector<std::pair<std::string, std::string> > StringVectorPair;
   typedef std::vector<std::string> StringVector;

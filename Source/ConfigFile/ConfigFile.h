@@ -6,7 +6,7 @@
 #include <string>
 #include <map>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 class AutoVal {

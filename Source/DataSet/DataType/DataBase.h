@@ -8,7 +8,7 @@
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   
   class DataBase
@@ -21,6 +21,6 @@ namespace _Navi_Common_
     {};
   };
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* _DATABASE_H_ */

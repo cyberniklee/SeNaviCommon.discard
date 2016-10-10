@@ -12,7 +12,7 @@
 #include "DataHeader.h"
 #include "../../Geometry/Vector3.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
   template <class ContainerAllocator>

@@ -14,7 +14,7 @@
 #include "../Exception/Exception.h"
 #include "DataType/DataBase.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   class DataQueue
   {
@@ -76,6 +76,6 @@ namespace _Navi_Common_
     };
   };
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* _DATAQUEUE_H_ */

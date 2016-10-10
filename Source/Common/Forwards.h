@@ -17,7 +17,7 @@
 #include "../Exception/Exception.h"
 #include "Declare.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 typedef boost::shared_ptr<void> VoidPtr;

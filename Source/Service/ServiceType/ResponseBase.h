@@ -8,7 +8,7 @@
 #ifndef _RESPONSEBASE_H_
 #define _RESPONSEBASE_H_
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   
   class ResponseBase
@@ -19,6 +19,6 @@ namespace _Navi_Common_
     ~ResponseBase (){};
   };
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* _RESPONSEBASE_H_ */

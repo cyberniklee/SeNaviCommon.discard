@@ -4,7 +4,7 @@
 #include <boost/scope_exit.hpp>
 #include <boost/make_shared.hpp>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 CallbackQueue::CallbackQueue(bool enabled)

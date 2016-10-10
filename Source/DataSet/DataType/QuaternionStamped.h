@@ -14,7 +14,7 @@
 #include "DataHeader.h"
 #include "../../Geometry/Quaternion.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
   template <class ContainerAllocator>

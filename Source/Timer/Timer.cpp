@@ -3,7 +3,7 @@
 #include "TimerManager.h"
 #include "../Console/Console.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 Timer::Impl::Impl()

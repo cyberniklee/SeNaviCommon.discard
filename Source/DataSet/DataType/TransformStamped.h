@@ -12,7 +12,7 @@
 #include "DataHeader.h"
 #include "Transform.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
   template <class ContainerAllocator>

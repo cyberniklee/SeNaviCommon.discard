@@ -8,7 +8,7 @@
 #include <boost/type_traits/remove_const.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 /**

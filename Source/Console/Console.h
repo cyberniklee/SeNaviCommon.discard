@@ -14,7 +14,7 @@
 #include <string>
 
 using namespace std;
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
   class Console

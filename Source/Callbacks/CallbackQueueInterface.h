@@ -4,7 +4,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
 
 /**

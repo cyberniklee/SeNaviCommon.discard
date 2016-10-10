@@ -14,7 +14,7 @@
 #include "../Time/Time.h"
 #include "../Common/Declare.h"
 
-namespace _Navi_Common_
+namespace NS_NaviCommon
 {
   #define DEFAULT_DATA_PROCESS_RATE 10.0
 
@@ -77,6 +77,6 @@ namespace _Navi_Common_
 
   };
 
-} /* namespace _Navi_Common_ */
+} /* namespace NS_NaviCommon */
 
 #endif /* _DATAPROCESSQUEUE_H_ */
