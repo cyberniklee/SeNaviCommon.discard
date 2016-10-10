@@ -13,7 +13,7 @@ Timer::Impl::Impl()
 
 Timer::Impl::~Impl()
 {
-  printError("Timer deregistering callbacks.");
+  console.warning("Timer deregistering callbacks.");
   stop();
 }
 

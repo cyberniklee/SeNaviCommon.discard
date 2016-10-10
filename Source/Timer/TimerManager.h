@@ -386,7 +386,7 @@ void TimerManager<T, D, E>::updateNext(const TimerInfoPtr& info, const T& curren
     // detect time jumping forward, as well as callbacks that are too slow
     if (info->next_expected + info->period < current_time)
     {
-      printError("Time jumped forward by [%f] for timer of period [%f], resetting timer (current=%f, next_expected=%f)", (current_time - info->next_expected).toSec(), info->period.toSec(), current_time.toSec(), info->next_expected.toSec());
+      console.error("Time jumped forward by [%f] for timer of period [%f], resetting timer (current=%f, next_expected=%f)", (current_time - info->next_expected).toSec(), info->period.toSec(), current_time.toSec(), info->next_expected.toSec());
       info->next_expected = current_time;
     }
   }
@@ -452,7 +452,7 @@ void TimerManager<T, D, E>::threadFunc()
     // detect time jumping backwards
     if (T::now() < current)
     {
-      printError("Time jumped backward, resetting timers");
+      console.error("Time jumped backward, resetting timers");
 
       current = T::now();
 
@@ -515,7 +515,7 @@ void TimerManager<T, D, E>::threadFunc()
 
       if (T::now() < current)
       {
-        printError("Time jumped backwards, breaking out of sleep");
+        console.error("Time jumped backwards, breaking out of sleep");
         break;
       }
 

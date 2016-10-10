@@ -10,25 +10,54 @@
 
 #include <iostream>
 #include <stdarg.h>
-#include <string>
 #include <stdio.h>
+#include <string>
 
 using namespace std;
 namespace _Navi_Common_
 {
 
-#define printMessage(message_, ...) \
-  do{   \
-    printf("Message: ");    \
-    printf(message_, ##__VA_ARGS__);   \
-  }while(0)
-  
-#define printError(error_, ...) \
-  do{   \
-    printf("Error: ");    \
-    printf(error_, ##__VA_ARGS__);   \
-  }while(0)
+  class Console
+  {
+    public:
+      void message(const char* message_, ...)
+      {
+        char out[1024] = {0};
+        va_list args;
+        va_start(args, message_);
+        vsnprintf(out, sizeof(out), message_, args);
+        va_end(args);
+        printf("Message: ");
+        printf(out);
+        printf("\r\n");
+      };
 
+      void warning(const char* warning_, ...)
+      {
+        char out[1024] = {0};
+        va_list args;
+        va_start(args, warning_);
+        vsnprintf(out, sizeof(out), warning_, args);
+        va_end(args);
+        printf("Warning: ");
+        printf(out);
+        printf("\r\n");
+      };
+
+      void error(const char* error_, ...)
+      {
+        char out[1024] = {0};
+        va_list args;
+        va_start(args, error_);
+        vsnprintf(out, sizeof(out), error_, args);
+        va_end(args);
+        printf("Error: ");
+        printf(out);
+        printf("\r\n");
+      };
+  };
+
+  static Console console;
 
 }
 
