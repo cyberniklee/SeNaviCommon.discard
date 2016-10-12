@@ -22,6 +22,7 @@ namespace NS_NaviCommon
    *
    * </configuration>
    */
+#define CONFIGURATION_PATH "./Parameters/"
 #define CONFIGURATION_COMMON_NODE_NAME "configuration"
 #define CONFIGURATION_COMMON_ATTRIBUTE_NAME "value"
   

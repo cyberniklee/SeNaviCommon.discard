@@ -22,6 +22,7 @@ namespace NS_NaviCommon
   typedef enum
   {
     SERVICE_TYPE_NONE = 0,
+    SERVICE_TYPE_MAP,
   }NaviServiceTypes;
 
   typedef boost::function<void (RequestBase*, ResponseBase*)> ServiceEntryType;

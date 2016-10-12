@@ -29,12 +29,13 @@ namespace NS_NaviCommon
 
   bool Parameter::loadConfigurationFile(const std::string file_name)
   {
-    if(access(file_name.c_str(), R_OK) < 0)
+    std::string full_name = std::string(CONFIGURATION_PATH) + file_name;
+    if(access(full_name.c_str(), R_OK) < 0)
     {
       //throw FileException("Configuration file not found!", file_name);
       return false;
     }
-    main_node = XMLNode::openFileHelper(file_name.c_str(), CONFIGURATION_COMMON_NODE_NAME);
+    main_node = XMLNode::openFileHelper(full_name.c_str(), CONFIGURATION_COMMON_NODE_NAME);
     if(main_node.isEmpty())
     {
       //throw XMLException("Configuration file is not correct!", main_node);
