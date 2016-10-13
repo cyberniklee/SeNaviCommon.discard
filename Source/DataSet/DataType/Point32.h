@@ -5,15 +5,15 @@
  *      Author: seeing
  */
 
-#ifndef _POINT32_H_
-#define _POINT32_H_
+#ifndef _DATATYPE_POINT32_H_
+#define _DATATYPE_POINT32_H_
 
 #include <string>
 #include <vector>
 #include "../../Time/Time.h"
 #include "DataBase.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
   template <class ContainerAllocator>
   struct Point32_ : public DataBase

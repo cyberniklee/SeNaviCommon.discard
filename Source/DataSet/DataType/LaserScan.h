@@ -5,13 +5,13 @@
  *      Author: seeing
  */
 
-#ifndef _LASERSCAN_H_
-#define _LASERSCAN_H_
+#ifndef _DATATYPE_LASERSCAN_H_
+#define _DATATYPE_LASERSCAN_H_
 
 #include "DataBase.h"
 #include "DataHeader.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

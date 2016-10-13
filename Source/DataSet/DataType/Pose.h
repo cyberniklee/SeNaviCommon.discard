@@ -5,14 +5,14 @@
  *      Author: seeing
  */
 
-#ifndef _POSE_H_
-#define _POSE_H_
+#ifndef _DATATYPE_POSE_H_
+#define _DATATYPE_POSE_H_
 
 #include "DataBase.h"
-#include "../../Geometry/Point.h"
-#include "../../Geometry/Quaternion.h"
+#include "Point.h"
+#include "Quaternion.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

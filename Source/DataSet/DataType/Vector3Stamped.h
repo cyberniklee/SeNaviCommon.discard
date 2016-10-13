@@ -5,14 +5,14 @@
  *      Author: seeing
  */
 
-#ifndef _VECTOR3STAMPED_H_
-#define _VECTOR3STAMPED_H_
+#ifndef _DATATYPE_VECTOR3STAMPED_H_
+#define _DATATYPE_VECTOR3STAMPED_H_
 
+#include "Vector3.h"
 #include "DataBase.h"
 #include "DataHeader.h"
-#include "../../Geometry/Vector3.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

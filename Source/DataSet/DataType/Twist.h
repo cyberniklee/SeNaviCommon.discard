@@ -5,13 +5,13 @@
  *      Author: seeing
  */
 
-#ifndef _TWIST_H_
-#define _TWIST_H_
+#ifndef _DATATYPE_TWIST_H_
+#define _DATATYPE_TWIST_H_
 
 #include "DataBase.h"
-#include "../../Geometry/Vector3.h"
+#include "Vector3.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

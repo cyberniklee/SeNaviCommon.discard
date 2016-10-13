@@ -5,19 +5,20 @@
  *      Author: seeing
  */
 
-#ifndef _VECTOR3_H_
-#define _VECTOR3_H_
+#ifndef _DATATYPE_VECTOR3_H_
+#define _DATATYPE_VECTOR3_H_
 
 #include <string>
 #include <vector>
 #include <ostream>
 #include <boost/shared_ptr.hpp>
+#include "DataBase.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>
-  struct Vector3_
+  struct Vector3_ : public DataBase
   {
           typedef Vector3_<ContainerAllocator> Type;
 

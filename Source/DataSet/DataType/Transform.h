@@ -5,14 +5,14 @@
  *      Author: seeing
  */
 
-#ifndef _TRANSFORM_H_
-#define _TRANSFORM_H_
+#ifndef _DATATYPE_TRANSFORM_H_
+#define _DATATYPE_TRANSFORM_H_
 
+#include "Quaternion.h"
+#include "Vector3.h"
 #include "DataBase.h"
-#include "../../Geometry/Vector3.h"
-#include "../../Geometry/Quaternion.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

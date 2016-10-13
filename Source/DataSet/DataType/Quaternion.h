@@ -5,19 +5,21 @@
  *      Author: seeing
  */
 
-#ifndef _QUATERNION_H_
-#define _QUATERNION_H_
+#ifndef _DATATYPE_QUATERNION_H_
+#define _DATATYPE_QUATERNION_H_
 
 #include <string>
 #include <vector>
 #include <ostream>
 #include <boost/shared_ptr.hpp>
+#include "DataBase.h"
 
-namespace NS_NaviCommon
+
+namespace NS_DataType
 {
   
   template <class ContainerAllocator>
-  struct Quaternion_
+  struct Quaternion_ : public DataBase
   {
           typedef Quaternion_<ContainerAllocator> Type;
 

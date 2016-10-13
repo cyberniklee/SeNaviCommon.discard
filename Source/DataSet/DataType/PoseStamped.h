@@ -5,15 +5,15 @@
  *      Author: seeing
  */
 
-#ifndef _POSESTAMPED_H_
-#define _POSESTAMPED_H_
+#ifndef _DATATYPE_POSESTAMPED_H_
+#define _DATATYPE_POSESTAMPED_H_
 
 
 #include "DataBase.h"
 #include "DataHeader.h"
 #include "Pose.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

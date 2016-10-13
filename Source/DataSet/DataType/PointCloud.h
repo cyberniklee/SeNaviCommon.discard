@@ -5,15 +5,15 @@
  *      Author: seeing
  */
 
-#ifndef _POINTCLOUD_H_
-#define _POINTCLOUD_H_
+#ifndef _DATATYPE_POINTCLOUD_H_
+#define _DATATYPE_POINTCLOUD_H_
 
 #include "DataBase.h"
 #include "DataHeader.h"
 #include "Point32.h"
 #include "ChannelFloat32.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

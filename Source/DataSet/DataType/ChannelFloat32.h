@@ -5,13 +5,13 @@
  *      Author: seeing
  */
 
-#ifndef _CHANNELFLOAT32_H_
-#define _CHANNELFLOAT32_H_
+#ifndef _DATATYPE_CHANNELFLOAT32_H_
+#define _DATATYPE_CHANNELFLOAT32_H_
 
 #include "DataBase.h"
 #include "DataHeader.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

@@ -1,13 +1,13 @@
 
-#ifndef _TWISTSTAMPED_H_
-#define _TWISTSTAMPED_H_
+#ifndef _DATATYPE_TWISTSTAMPED_H_
+#define _DATATYPE_TWISTSTAMPED_H_
 
 
 #include "DataBase.h"
 #include "DataHeader.h"
 #include "Twist.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

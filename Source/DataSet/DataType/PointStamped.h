@@ -5,14 +5,14 @@
  *      Author: seeing
  */
 
-#ifndef _POINTSTAMPED_H_
-#define _POINTSTAMPED_H_
+#ifndef _DATATYPE_POINTSTAMPED_H_
+#define _DATATYPE_POINTSTAMPED_H_
 
 #include "DataBase.h"
 #include "DataHeader.h"
-#include "../../Geometry/Point.h"
+#include "Point.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

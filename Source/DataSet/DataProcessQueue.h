@@ -16,6 +16,8 @@
 
 namespace NS_NaviCommon
 {
+  using namespace NS_DataType;
+
   #define DEFAULT_DATA_PROCESS_RATE 10.0
 
   class DataProcessQueue : public DataQueue

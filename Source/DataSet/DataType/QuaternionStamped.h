@@ -5,16 +5,16 @@
  *      Author: seeing
  */
 
-#ifndef _QUATERNIONSTAMPED_H_
-#define _QUATERNIONSTAMPED_H_
+#ifndef _DATATYPE_QUATERNIONSTAMPED_H_
+#define _DATATYPE_QUATERNIONSTAMPED_H_
 
 
 
+#include "Quaternion.h"
 #include "DataBase.h"
 #include "DataHeader.h"
-#include "../../Geometry/Quaternion.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

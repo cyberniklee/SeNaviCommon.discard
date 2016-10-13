@@ -5,10 +5,10 @@
  *      Author: seeing
  */
 
-#ifndef _DATABASE_H_
-#define _DATABASE_H_
+#ifndef _DATATYPE_DATABASE_H_
+#define _DATATYPE_DATABASE_H_
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
   
   class DataBase

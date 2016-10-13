@@ -5,14 +5,14 @@
  *      Author: seeing
  */
 
-#ifndef _TRANSFORMDATA_H_
-#define _TRANSFORMDATA_H_
+#ifndef _DATATYPE_TRANSFORMDATA_H_
+#define _DATATYPE_TRANSFORMDATA_H_
 
 #include "DataBase.h"
 #include "TransformStamped.h"
 
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
 
   template <class ContainerAllocator>

@@ -16,6 +16,7 @@
 
 namespace NS_NaviCommon
 {
+  using namespace NS_DataType;
   class DataQueue
   {
   public:

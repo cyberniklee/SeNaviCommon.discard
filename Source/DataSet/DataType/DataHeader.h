@@ -1,13 +1,13 @@
 
-#ifndef _DATAHEADER_H_
-#define _DATAHEADER_H_
+#ifndef _DATATYPE_DATAHEADER_H_
+#define _DATATYPE_DATAHEADER_H_
 
 #include <string>
 #include <vector>
 #include "../../Time/Time.h"
 #include "DataBase.h"
 
-namespace NS_NaviCommon
+namespace NS_DataType
 {
   template <class ContainerAllocator>
   struct DataHeader_ : public DataBase
@@ -18,12 +18,12 @@ namespace NS_NaviCommon
     {
     };
 
-    DataHeader_ (const ContainerAllocator& allocator) : seq(0), stamp(), frame_id(allocator)
+    DataHeader_ (const ContainerAllocator& allocator) : seq(0), stamp(allocator), frame_id(allocator)
     {
     };
 
     unsigned long seq;
-    Time stamp;
+    NS_NaviCommon::Time stamp;
 
     std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other> frame_id;
 

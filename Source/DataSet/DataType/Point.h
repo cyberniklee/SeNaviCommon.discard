@@ -5,18 +5,19 @@
  *      Author: seeing
  */
 
-#ifndef _POINT_H_
-#define _POINT_H_
+#ifndef _DATATYPE_POINT_H_
+#define _DATATYPE_POINT_H_
 
 #include <string>
 #include <vector>
 #include <ostream>
 #include <boost/shared_ptr.hpp>
+#include "DataBase.h"
 
-namespace NS_NaviCommon {
+namespace NS_DataType {
 
 template <class ContainerAllocator>
-struct Point_
+struct Point_ : public DataBase
 {
 	typedef Point_<ContainerAllocator> Type;
 
