@@ -35,7 +35,7 @@ inline boost::shared_ptr<M> defaultMessageCreateFunction()
 }
 
 /**
- * \brief Event type for subscriptions, const ros::MessageEvent<M const>& can be used in your callback instead of const boost::shared_ptr<M const>&
+ * \brief Event type for subscriptions, const MessageEvent<M const>& can be used in your callback instead of const boost::shared_ptr<M const>&
  *
  * Useful if you need to retrieve meta-data about the message, such as the full connection header, or the publisher's node name
  */

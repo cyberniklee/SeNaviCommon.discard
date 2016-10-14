@@ -18,7 +18,7 @@ namespace NS_NaviCommon
 {
 
 /**
- * \brief This is the default implementation of the ros::CallbackQueueInterface
+ * \brief This is the default implementation of the CallbackQueueInterface
  */
 class CallbackQueue : public CallbackQueueInterface
 {

@@ -99,7 +99,7 @@ struct SubscriberCallbacks
 typedef boost::shared_ptr<SubscriberCallbacks> SubscriberCallbacksPtr;
 
 /**
- * \brief Structure passed as a parameter to the callback invoked by a ros::Timer
+ * \brief Structure passed as a parameter to the callback invoked by a Timer
  */
 struct TimerEvent
 {
@@ -117,7 +117,7 @@ struct TimerEvent
 typedef boost::function<void(const TimerEvent&)> TimerCallback;
 
 /**
- * \brief Structure passed as a parameter to the callback invoked by a ros::WallTimer
+ * \brief Structure passed as a parameter to the callback invoked by a WallTimer
  */
 /*
 struct WallTimerEvent

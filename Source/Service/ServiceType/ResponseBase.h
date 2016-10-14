@@ -8,7 +8,7 @@
 #ifndef _RESPONSEBASE_H_
 #define _RESPONSEBASE_H_
 
-namespace NS_NaviCommon
+namespace NS_ServiceType
 {
   
   class ResponseBase
@@ -17,6 +17,8 @@ namespace NS_NaviCommon
     ResponseBase (){};
     virtual
     ~ResponseBase (){};
+
+    bool result;
   };
 
 } /* namespace NS_NaviCommon */

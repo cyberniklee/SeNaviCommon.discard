@@ -12,6 +12,7 @@
 #include <boost/function.hpp>
 #include "DataQueue.h"
 #include "../Time/Time.h"
+#include "../Time/Rate.h"
 #include "../Common/Declare.h"
 
 namespace NS_NaviCommon

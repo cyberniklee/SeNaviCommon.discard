@@ -25,7 +25,7 @@ namespace NS_NaviCommon
     SERVICE_TYPE_MAP,
   }NaviServiceTypes;
 
-  typedef boost::function<void (RequestBase*, ResponseBase*)> ServiceEntryType;
+  typedef boost::function<void (NS_ServiceType::RequestBase*, NS_ServiceType::ResponseBase*)> ServiceEntryType;
 
   typedef std::multimap<NaviServiceTypes, ServiceEntryType> ServiceDictionary;
   typedef ServiceDictionary::iterator ServiceDictionaryIterator;
@@ -53,7 +53,7 @@ namespace NS_NaviCommon
       return true;
     };
 
-    bool call(NaviServiceTypes service_type, RequestBase* request, ResponseBase* response)
+    bool call(NaviServiceTypes service_type, NS_ServiceType::RequestBase* request, NS_ServiceType::ResponseBase* response)
     {
       boost::mutex::scoped_lock lock(service_dict_lock);
       std::pair<ServiceDictionaryIterator, ServiceDictionaryIterator> ranger;

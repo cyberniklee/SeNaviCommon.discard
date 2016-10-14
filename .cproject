@@ -60,10 +60,15 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.so.debug.673620987.1866306122" name="Rate.h" rcbsApplicability="disable" resourcePath="Source/Time/Rate.h" toolsToInvoke=""/>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.so.debug.673620987.1194933230" name="Duration.cpp" rcbsApplicability="disable" resourcePath="Source/Time/Duration.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.cpp.compiler.937356861.552562323">
+						<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.937356861.552562323" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.937356861"/>
+					</fileInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.so.debug.673620987.950304776" name="Duration.h" rcbsApplicability="disable" resourcePath="Source/Time/Duration.h" toolsToInvoke=""/>
 					<fileInfo id="cdt.managedbuild.config.gnu.cross.so.debug.673620987.542144111" name="Exception.h" rcbsApplicability="disable" resourcePath="Source/Exception/Exception.h" toolsToInvoke=""/>
 					<sourceEntries>
 						<entry excluding="Timer|Source" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry excluding="Time/Duration.h|Time/Duration.cpp|Time/Rate.h|Time/Rate.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Source"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Source"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

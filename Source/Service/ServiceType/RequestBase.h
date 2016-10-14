@@ -8,7 +8,7 @@
 #ifndef _REQUESTBASE_H_
 #define _REQUESTBASE_H_
 
-namespace NS_NaviCommon
+namespace NS_ServiceType
 {
   
   class RequestBase

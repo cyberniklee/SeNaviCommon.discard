@@ -20,7 +20,7 @@ namespace NS_NaviCommon
  *
  * The ParameterAdapter is templated on the callback parameter type (\b not the bare message type), and provides 3 things:
  *  - Message typedef, which provides the bare message type, no const or reference qualifiers
- *  - Event typedef, which provides the ros::MessageEvent type
+ *  - Event typedef, which provides the MessageEvent type
  *  - Parameter typedef, which provides the actual parameter type (may be slightly different from M)
  *  - static getParameter(event) function, which returns a parameter type given the event
  *  - static bool is_const informs you whether or not the parameter type is a const message
