@@ -23,6 +23,8 @@ namespace NS_NaviCommon
   {
     SERVICE_TYPE_NONE = 0,
     SERVICE_TYPE_MAP,
+    SERVICE_TYPE_RAW_ODOMETRY,
+    SERVICE_TYPE_IMU_ODOMETRY,
   }NaviServiceTypes;
 
   typedef boost::function<void (NS_ServiceType::RequestBase*, NS_ServiceType::ResponseBase*)> ServiceEntryType;
