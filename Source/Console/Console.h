@@ -16,6 +16,10 @@
 using namespace std;
 namespace NS_NaviCommon
 {
+  #define COLOR_NONE "\033[m"
+  #define COLOR_RED "\033[1;31m"
+  #define COLOR_GREEN "\033[1;32m"
+  #define COLOR_YELLOW "\033[1;33m"
 
   class Console
   {
@@ -27,8 +31,10 @@ namespace NS_NaviCommon
         va_start(args, message_);
         vsnprintf(out, sizeof(out), message_, args);
         va_end(args);
+        printf(COLOR_GREEN);
         printf("Message: ");
         printf(out);
+        printf(COLOR_NONE);
         printf("\r\n");
       };
 
@@ -39,8 +45,10 @@ namespace NS_NaviCommon
         va_start(args, warning_);
         vsnprintf(out, sizeof(out), warning_, args);
         va_end(args);
+        printf(COLOR_YELLOW);
         printf("Warning: ");
         printf(out);
+        printf(COLOR_NONE);
         printf("\r\n");
       };
 
@@ -51,8 +59,10 @@ namespace NS_NaviCommon
         va_start(args, error_);
         vsnprintf(out, sizeof(out), error_, args);
         va_end(args);
+        printf(COLOR_RED);
         printf("Error: ");
         printf(out);
+        printf(COLOR_NONE);
         printf("\r\n");
       };
   };
