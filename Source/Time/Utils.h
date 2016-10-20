@@ -21,6 +21,12 @@ static inline void delay(unsigned long ms){
 unsigned long getUs();
 unsigned int getMs();
 
+static inline time_t getTimeStamp(){
+  time_t timestamp;
+  time(&timestamp);
+  return timestamp;
+}
+
 }
 
 #endif
