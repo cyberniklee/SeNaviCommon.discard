@@ -182,6 +182,17 @@ namespace NS_NaviCommon
     return new_data;
   }
 
+  CommData* Communicator::createResponseByRequest(CommData* request)
+  {
+    CommData* response = createMessage();
+
+    response->type = request->type;
+    response->reason = request->reason;
+    response->sequence = request->sequence;
+
+    return response;
+  }
+
   CommData* Communicator::sendAndWait(CommData** request)
   {
     if(sendMessage(*request) == false)

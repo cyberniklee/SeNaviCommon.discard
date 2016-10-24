@@ -15,11 +15,17 @@
 
 namespace NS_NaviCommon
 {
-  
+  enum {
+    NET_RX_TIMEOUT = -1,
+    NET_RX_FAILURE = -2,
+  };
+
+  #define NET_RX_WAIT 1
+
   class NetTranceiver
   {
   public:
-    NetTranceiver (int local_port = 6688);
+    NetTranceiver (int local_port = 6688, int remote_port = 6689);
     ~NetTranceiver ();
   private:
     int handle;
@@ -28,14 +34,15 @@ namespace NS_NaviCommon
     struct sockaddr_in remote_addr;
 
     int bind_to_port;
+    int remote_port_;
 
     boost::mutex lock;
 
   public:
     bool open();
     bool close();
-    bool receive(unsigned char* buffer, int& length);
-    bool transmit(unsigned char* buffer, int length);
+    int receive(unsigned char* buffer, int length, int wait_seconds = NET_RX_WAIT);
+    int transmit(unsigned char* buffer, int length);
   };
 
 } /* namespace NS_NaviCommon */

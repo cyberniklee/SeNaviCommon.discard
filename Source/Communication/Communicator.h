@@ -74,6 +74,7 @@ namespace NS_NaviCommon
     bool sendMessage(CommData* message);
     bool sendResponse(CommData* response);
     void finishMessage(CommData* message);
+    CommData* createResponseByRequest(CommData* request);
   };
 
 } /* namespace NS_NaviCommon */

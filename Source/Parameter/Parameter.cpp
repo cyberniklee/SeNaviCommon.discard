@@ -11,6 +11,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "../Exception/Exception.h"
+#include "../Console/Console.h"
 
 namespace NS_NaviCommon
 {
@@ -58,10 +59,13 @@ namespace NS_NaviCommon
     if(node.isEmpty())
     {
       //throw XMLException("Node is not correct!", node);
+      console.debug("Get parameter [%s], with default value (%s) .", node_name, default_value);
       return default_value;
     }
 
     value = node.getAttribute(CONFIGURATION_COMMON_ATTRIBUTE_NAME);
+
+    console.debug("Get parameter [%s], with value (%s) .", node_name, value);
 
     return value;
   }

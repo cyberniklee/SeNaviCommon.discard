@@ -20,6 +20,7 @@ namespace NS_NaviCommon
   #define COLOR_RED "\033[1;31m"
   #define COLOR_GREEN "\033[1;32m"
   #define COLOR_YELLOW "\033[1;33m"
+  #define COLOR_CYAN "\033[1;36m"
 
   class Console
   {
@@ -61,6 +62,20 @@ namespace NS_NaviCommon
         va_end(args);
         printf(COLOR_RED);
         printf("Error: ");
+        printf(out);
+        printf(COLOR_NONE);
+        printf("\r\n");
+      };
+
+      void debug(const char* message_, ...)
+      {
+        char out[1024] = {0};
+        va_list args;
+        va_start(args, message_);
+        vsnprintf(out, sizeof(out), message_, args);
+        va_end(args);
+        printf(COLOR_CYAN);
+        printf(">>>   ");
         printf(out);
         printf(COLOR_NONE);
         printf("\r\n");
