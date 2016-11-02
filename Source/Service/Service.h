@@ -18,7 +18,6 @@
 
 namespace NS_NaviCommon
 {
-  
   typedef enum
   {
     SERVICE_TYPE_NONE = 0,
@@ -44,6 +43,7 @@ namespace NS_NaviCommon
   private:
     ServiceDictionary service_dictionary;
     boost::mutex service_dict_lock;
+
   public:
     bool initialize()
     {
@@ -71,7 +71,7 @@ namespace NS_NaviCommon
           //throw NullPointException("Entry point is null!", entry);
           return false;
         }
-        boost::thread(boost::bind(entry, request, response));
+        entry(request, response);
       }
       return true;
     };

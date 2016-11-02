@@ -80,7 +80,7 @@ static inline void quaternionMsgToTF(const NS_DataType::Quaternion& msg, Quatern
   bt = Quaternion(msg.x, msg.y, msg.z, msg.w); 
   if (fabs(bt.length2() - 1 ) > QUATERNION_TOLERANCE) 
     {
-      NS_NaviCommon::console.message("MSG to TF: Quaternion Not Properly Normalized");
+      NS_NaviCommon::console.warning("MSG to TF: Quaternion Not Properly Normalized");
       bt.normalize();
     }
 };
@@ -89,7 +89,7 @@ static inline void quaternionTFToMsg(const Quaternion& bt, NS_DataType::Quaterni
 {
   if (fabs(bt.length2() - 1 ) > QUATERNION_TOLERANCE) 
     {
-      NS_NaviCommon::console.message("TF to MSG: Quaternion Not Properly Normalized");
+      NS_NaviCommon::console.warning("TF to MSG: Quaternion Not Properly Normalized");
       Quaternion bt_temp = bt; 
       bt_temp.normalize();
       msg.x = bt_temp.x(); msg.y = bt_temp.y(); msg.z = bt_temp.z();  msg.w = bt_temp.w();

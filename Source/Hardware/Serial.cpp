@@ -198,7 +198,7 @@ int Serial::waitfordata(size_t data_count, unsigned int timeout, size_t * return
        
         if (*returned_size >= data_count)  // @test, indicate already get enough data to return
         {
-            return 0;
+            return ANS_OK;
         }
     }
     while ( isOpened() )
@@ -223,7 +223,7 @@ int Serial::waitfordata(size_t data_count, unsigned int timeout, size_t * return
             if ( ioctl(serial_fd, FIONREAD, returned_size) == -1) return ANS_DEV_ERR;
             if (*returned_size >= data_count)
             {
-                return 0;
+                return ANS_OK;
             }
             else 
             {         
