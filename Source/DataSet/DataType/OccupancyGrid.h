@@ -32,7 +32,7 @@ namespace NS_DataType
     DataHeader_<ContainerAllocator> header;
     MapMetaData_<ContainerAllocator> info;
 
-    std::vector<unsigned char, typename ContainerAllocator::template rebind<unsigned char>::other> data;
+    std::vector<char, typename ContainerAllocator::template rebind<char>::other> data;
 
     typedef boost::shared_ptr<OccupancyGrid_<ContainerAllocator> > Ptr;
     typedef boost::shared_ptr<OccupancyGrid_<ContainerAllocator> const> ConstPtr;

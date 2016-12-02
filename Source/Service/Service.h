@@ -26,7 +26,9 @@ namespace NS_NaviCommon
     SERVICE_TYPE_IMU_ODOMETRY,
     SERVICE_TYPE_START_SCAN,
     SERVICE_TYPE_STOP_SCAN,
-    SERVICE_TYPE_ODOMETRY_TRANSFORM,
+    SERVICE_TYPE_ODOMETRY_BASE_TRANSFORM,
+    SERVICE_TYPE_MAP_ODOMETRY_TRANSFORM,
+    SERVICE_TYPE_COSTMAP,
   }NaviServiceTypes;
 
   typedef boost::function<void (NS_ServiceType::RequestBase*, NS_ServiceType::ResponseBase*)> ServiceEntryType;
