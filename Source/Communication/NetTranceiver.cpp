@@ -54,7 +54,7 @@ namespace NS_NaviCommon
       return false;
     }
 
-    //::fcntl(handle, F_SETFL, O_NONBLOCK);
+    ::fcntl(handle, F_SETFL, O_NONBLOCK);
 
     return true;
   }
@@ -68,24 +68,29 @@ namespace NS_NaviCommon
   int NetTranceiver::receive(unsigned char* buffer, int length, int wait_seconds)
   {
     struct timeval tv;
-    int count;
+    int count = 0;
     fd_set rcv_fd;
     int addr_len;
     FD_ZERO(&rcv_fd);
     FD_SET(handle, &rcv_fd);
     tv.tv_sec = wait_seconds;
     tv.tv_usec = 0;
-    select(handle + 1,&rcv_fd, NULL, NULL, &tv);
-    if(FD_ISSET(handle, &rcv_fd))
+    int ret = select(handle + 1, &rcv_fd, NULL, NULL, &tv);
+    if(ret > 0)
     {
-      if((count = ::recvfrom(handle, buffer, length, 0, (struct sockaddr*)&remote_addr, (socklen_t*)&addr_len)) >= 0)
+      if(FD_ISSET(handle, &rcv_fd))
       {
-        return count;
-      }else{
-        return NET_RX_FAILURE;
+        if((count = ::recvfrom(handle, buffer, length, 0, (struct sockaddr*)&remote_addr, (socklen_t*)&addr_len)) >= 0)
+        {
+          return count;
+        }else{
+          return NET_RX_FAILURE;
+        }
       }
-    }else{
+    }else if(ret == 0){
       return NET_RX_TIMEOUT;
+    }else{
+      return NET_RX_FAILURE;
     }
   }
 

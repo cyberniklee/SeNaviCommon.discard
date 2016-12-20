@@ -28,6 +28,7 @@ namespace NS_NaviCommon
     DATA_TYPE_TRANSFORM,
     DATA_TYPE_LASER_SCAN,
     DATA_TYPE_MAP,
+    DATA_TYPE_TARGET_GOAL,
   }NaviDataTypes;
 
   typedef std::multimap<NaviDataTypes, DataProcessQueue*> DataDictionary;

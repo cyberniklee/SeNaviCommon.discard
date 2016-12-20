@@ -9,7 +9,7 @@
 #include "../Time/Utils.h"
 #include "../Time/Rate.h"
 #include <boost/bind.hpp>
-
+#include <stdio.h>
 
 namespace NS_NaviCommon
 {
@@ -22,7 +22,7 @@ namespace NS_NaviCommon
     id_ = 0;
     running = false;
     work_thread_count = 0;
-    instance = this;
+    //instance = this;
   }
   
   Communicator::~Communicator ()
@@ -40,22 +40,30 @@ namespace NS_NaviCommon
     {
       time_t cur_time;
       time(&cur_time);
+      bool timeout_ = false;
+
       msg_holder_lock.lock();
-      for(MsgIterator it = msg_holder.begin(); it != msg_holder.end();)
+      for(MsgIterator it = msg_holder.begin(); it != msg_holder.end(); )
       {
-        CommData* data = (CommData*)(it->second);
-        if(data->time_stamp - cur_time > MESSAGE_TIMEOUT)
+        CommData* data = *it;
+        if(cur_time - data->time_stamp > MESSAGE_TIMEOUT)
         {
-          msg_holder.erase(it++);
-
-          boost::thread excute_thread(boost::bind(&Communicator::onTimeout, instance, data));
-
-          holder_cond_lock.lock();
-          holder_cond.notify_all();
-          holder_cond_lock.unlock();
+          msg_holder.erase(it);
+          if(data != NULL)
+            delete data;
+          timeout_ = true;
+        }else{
+          it++;
         }
       }
       msg_holder_lock.unlock();
+
+      if(timeout_)
+      {
+        holder_cond_lock.lock();
+        holder_cond.notify_all();
+        holder_cond_lock.unlock();
+      }
 
       rate.sleep();
     }
@@ -67,7 +75,8 @@ namespace NS_NaviCommon
     int bytes_received = 0;
     while(running)
     {
-      if(tranceiver->receive(buf, bytes_received) == false)
+      bytes_received = tranceiver->receive(buf, sizeof(buf));
+      if(bytes_received <= 0)
       {
         continue;
       }
@@ -91,15 +100,15 @@ namespace NS_NaviCommon
       new_data->time_stamp = NS_NaviCommon::getTimeStamp();
 
       msg_holder_lock.lock();
-      msg_holder.insert(MsgPair(new_data->sequence, data));
+      msg_holder.push_back(new_data);
       msg_holder_lock.unlock();
 
-      if(new_data->reason == COMMUNICATION_DATA_TYPE_REQUEST)
+      if(new_data->type == COMMUNICATION_DATA_TYPE_REQUEST)
       {
         //request
         if(work_thread_count <= MAX_WORK_THREADS)
         {
-          boost::thread excute_thread(boost::bind(&Communicator::onReceive, instance, new_data));
+          boost::thread excute_thread(boost::bind(&Communicator::receiveMessageProcess, this, new_data));
           work_thread_count++;
         }
       }else{
@@ -114,56 +123,54 @@ namespace NS_NaviCommon
 
 
 
-  CommData* Communicator::findMessage(MsgSeqID seq, unsigned char reason, unsigned char type)
+  CommData* Communicator::findMessage(unsigned long seq, unsigned char reason, unsigned char type)
   {
     boost::mutex::scoped_lock lock(msg_holder_lock);
-    std::pair<MsgIterator, MsgIterator> ranger;
-    ranger = msg_holder.equal_range(seq);
-    for(MsgIterator it = ranger.first; it != ranger.second; ++it)
+
+    for(MsgIterator it = msg_holder.begin(); it != msg_holder.end(); it++)
     {
-      CommData* data = it->second;
-      if(data == NULL)
+      CommData* data = *it;
+
+      if(data != NULL && data->sequence == seq && data->type == type && data->reason == reason)
       {
-        continue;
+        return data;
       }
-      if(data->type != type || data->reason != reason)
-      {
-        continue;
-      }
-      return data;
     }
     return NULL;
   }
 
-  CommData* Communicator::findRequest(MsgSeqID seq, unsigned char reason)
+  CommData* Communicator::findRequest(unsigned long seq, unsigned char reason)
   {
     return findMessage(seq, reason, COMMUNICATION_DATA_TYPE_REQUEST);
   }
 
-  CommData* Communicator::findResponse(MsgSeqID seq, unsigned char reason)
+  CommData* Communicator::findResponse(unsigned long seq, unsigned char reason)
   {
     return findMessage(seq, reason, COMMUNICATION_DATA_TYPE_RESPONSE);
   }
 
-  void Communicator::onTimeout(CommData* timeout_message)
+  void Communicator::receiveMessageProcess(CommData* message)
   {
-    if(timeout_message != NULL)
-      delete timeout_message;
+    instance->onReceive(message);
+    finishMessage(message);
+    work_thread_count--;
   }
 
   void Communicator::onReceive(CommData* message)
   {
 
-    work_thread_count--;
   }
 
-  bool Communicator::initialize(int local_port)
+
+  bool Communicator::initialize(int local_port, int remote_port)
   {
-    tranceiver = new NetTranceiver(local_port);
+    tranceiver = new NetTranceiver(local_port, remote_port);
     if(tranceiver->open() == false)
     {
       return false;
     }
+
+    running = true;
 
     receive_thread = boost::thread(boost::bind(&Communicator::receiveProcess, this));
 
@@ -182,11 +189,20 @@ namespace NS_NaviCommon
     return new_data;
   }
 
+  CommData* Communicator::createRequestMessage(unsigned char reason)
+  {
+    CommData* new_data = createMessage();
+    new_data->type = COMMUNICATION_DATA_TYPE_REQUEST;
+    new_data->reason = reason;
+
+    return new_data;
+  }
+
   CommData* Communicator::createResponseByRequest(CommData* request)
   {
     CommData* response = createMessage();
 
-    response->type = request->type;
+    response->type = COMMUNICATION_DATA_TYPE_RESPONSE;
     response->reason = request->reason;
     response->sequence = request->sequence;
 
@@ -201,13 +217,13 @@ namespace NS_NaviCommon
     }
 
     msg_holder_lock.lock();
-    msg_holder.insert(MsgPair((*request)->sequence, *request));
+    msg_holder.push_back(*request);
     msg_holder_lock.unlock();
 
     CommData* response = NULL;
     holder_cond_lock.lock();
-    while(findRequest((*request)->sequence, (*request)->reason) == *request &&
-        (response = findResponse((*request)->sequence, (*request)->reason)) == NULL)
+    while((findRequest((*request)->sequence, (*request)->reason) == *request) &&
+        ((response = findResponse((*request)->sequence, (*request)->reason)) == NULL))
     {
       holder_cond.timed_wait(holder_cond_lock,
                              boost::get_system_time() + boost::posix_time::seconds(HOLDER_COND_TIMEOUT));
@@ -224,6 +240,9 @@ namespace NS_NaviCommon
     {
       return false;
     }
+
+    message->time_stamp = NS_NaviCommon::getTimeStamp();
+
     if(tranceiver->transmit((unsigned char*)message, sizeof(CommData)) == false)
     {
       return false;
@@ -241,14 +260,18 @@ namespace NS_NaviCommon
     if(message == NULL)
       return;
     msg_holder_lock.lock();
+
     for(MsgIterator it = msg_holder.begin(); it != msg_holder.end();)
     {
-      CommData* data = (CommData*)(it->second);
+      CommData* data = *it;
 
-      if(data->reason == message->reason && data->sequence == message->sequence)
+      if(data->sequence == message->sequence)
       {
-        msg_holder.erase(it++);
-        delete data;
+        msg_holder.erase(it);
+        if(data != NULL)
+          delete data;
+      }else{
+        it++;
       }
     }
     msg_holder_lock.unlock();

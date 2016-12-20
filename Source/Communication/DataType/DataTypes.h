@@ -33,7 +33,7 @@ namespace NS_CommDataType{
     unsigned char result;
     unsigned short payload_length;
     unsigned char payload[500];
-  };
+  }__attribute__((packed));
 
 }
 

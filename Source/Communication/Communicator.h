@@ -10,7 +10,7 @@
 
 #include "NetTranceiver.h"
 #include "DataType/DataTypes.h"
-#include <map>
+#include <vector>
 #include <boost/thread/condition.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -18,10 +18,8 @@ namespace NS_NaviCommon
 {
   using namespace NS_CommDataType;
 
-  typedef unsigned long MsgSeqID;
-  typedef std::multimap<MsgSeqID, CommData*> MsgHolder;
+  typedef std::vector<CommData*> MsgHolder;
   typedef MsgHolder::iterator MsgIterator;
-  typedef std::pair<MsgSeqID, CommData*> MsgPair;
 
   #define HOLDER_COND_TIMEOUT 1
   #define MESSAGE_TIMEOUT 3
@@ -46,7 +44,7 @@ namespace NS_NaviCommon
 
     boost::mutex msg_holder_lock;
 
-    MsgSeqID id_;
+    unsigned long id_;
 
     bool running;
 
@@ -59,21 +57,23 @@ namespace NS_NaviCommon
     void timeoutProcess();
     void receiveProcess();
 
-    CommData* findMessage(MsgSeqID seq, unsigned char reason, unsigned char type);
-    CommData* findRequest(MsgSeqID seq, unsigned char reason);
-    CommData* findResponse(MsgSeqID seq, unsigned char reason);
+    void receiveMessageProcess(CommData* message);
+
+    CommData* findMessage(unsigned long seq, unsigned char reason, unsigned char type);
+    CommData* findRequest(unsigned long seq, unsigned char reason);
+    CommData* findResponse(unsigned long seq, unsigned char reason);
   protected:
     Communicator* instance;
-    virtual void onTimeout(CommData* timeout_message);
     virtual void onReceive(CommData* message);
   public:
-    bool initialize(int local_port);
+    bool initialize(int local_port, int remote_port);
     void quit();
     CommData* createMessage();
     CommData* sendAndWait(CommData** request);
     bool sendMessage(CommData* message);
     bool sendResponse(CommData* response);
     void finishMessage(CommData* message);
+    CommData* createRequestMessage(unsigned char reason);
     CommData* createResponseByRequest(CommData* request);
   };
 
