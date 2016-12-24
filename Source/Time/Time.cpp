@@ -50,7 +50,9 @@ namespace NS_NaviCommon
   // of time.h from including boost/thread/mutex.hpp
   static boost::mutex g_sim_time_mutex;
 
+  /*
   static bool g_initialized(false);
+  */
   static bool g_use_sim_time(true);
   static Time g_sim_time(0, 0);
 
@@ -61,7 +63,7 @@ namespace NS_NaviCommon
    * These have only internal linkage to this translation unit.
    * (i.e. not exposed to users of the time classes)
    */
-  void ros_walltime(uint32_t& sec, uint32_t& nsec) 
+  void walltime(uint32_t& sec, uint32_t& nsec)
 #ifndef WIN32    
     throw(NoHighPerformanceTimersException)
 #endif
@@ -210,10 +212,12 @@ namespace NS_NaviCommon
 
   Time Time::now()
   {
+    /*
     if (!g_initialized)
       {
         throw TimeNotInitializedException();
       }
+      */
 
     if (g_use_sim_time)
       {
@@ -223,7 +227,7 @@ namespace NS_NaviCommon
       }
 
     Time t;
-    ros_walltime(t.sec, t.nsec);
+    walltime(t.sec, t.nsec);
 
     return t;
   }
@@ -240,7 +244,9 @@ namespace NS_NaviCommon
   {
     g_stopped = false;
     g_use_sim_time = false;
+    /*
     g_initialized = true;
+    */
   }
 
   void Time::shutdown()
@@ -407,7 +413,7 @@ namespace NS_NaviCommon
   WallTime WallTime::now()
   {
     WallTime t;
-    ros_walltime(t.sec, t.nsec);
+    walltime(t.sec, t.nsec);
 
     return t;
   }
