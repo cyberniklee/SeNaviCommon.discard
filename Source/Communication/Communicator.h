@@ -17,23 +17,23 @@
 namespace NS_NaviCommon
 {
   using namespace NS_CommDataType;
-
+  
   typedef std::vector<CommData*> MsgHolder;
   typedef MsgHolder::iterator MsgIterator;
-
-  #define HOLDER_COND_TIMEOUT 1
-  #define MESSAGE_TIMEOUT 3
-  #define MAX_WORK_THREADS 10
-
-  #define LOCAL_PORT 6688
-  #define REMOTE_PORT 6699
-
-
+  
+#define HOLDER_COND_TIMEOUT 1
+#define MESSAGE_TIMEOUT 3
+#define MAX_WORK_THREADS 10
+  
+#define LOCAL_PORT 6688
+#define REMOTE_PORT 6699
+  
   class Communicator
   {
   public:
     Communicator ();
-    virtual ~Communicator ();
+    virtual
+    ~Communicator ();
   private:
     NetTranceiver* tranceiver;
 
@@ -54,27 +54,43 @@ namespace NS_NaviCommon
     boost::thread timeout_thread;
 
   private:
-    void timeoutProcess();
-    void receiveProcess();
+    void
+    timeoutProcess ();
+    void
+    receiveProcess ();
 
-    void receiveMessageProcess(CommData* message);
+    void
+    receiveMessageProcess (CommData* message);
 
-    CommData* findMessage(unsigned long seq, unsigned char reason, unsigned char type);
-    CommData* findRequest(unsigned long seq, unsigned char reason);
-    CommData* findResponse(unsigned long seq, unsigned char reason);
+    CommData*
+    findMessage (unsigned long seq, unsigned char reason, unsigned char type);
+    CommData*
+    findRequest (unsigned long seq, unsigned char reason);
+    CommData*
+    findResponse (unsigned long seq, unsigned char reason);
   protected:
     Communicator* instance;
-    virtual void onReceive(CommData* message);
+    virtual void
+    onReceive (CommData* message);
   public:
-    bool initialize(int local_port, int remote_port);
-    void quit();
-    CommData* createMessage();
-    CommData* sendAndWait(CommData** request);
-    bool sendMessage(CommData* message);
-    bool sendResponse(CommData* response);
-    void finishMessage(CommData* message);
-    CommData* createRequestMessage(unsigned char reason);
-    CommData* createResponseByRequest(CommData* request);
+    bool
+    initialize (int local_port, int remote_port);
+    void
+    quit ();
+    CommData*
+    createMessage ();
+    CommData*
+    sendAndWait (CommData** request);
+    bool
+    sendMessage (CommData* message);
+    bool
+    sendResponse (CommData* response);
+    void
+    finishMessage (CommData* message);
+    CommData*
+    createRequestMessage (unsigned char reason);
+    CommData*
+    createResponseByRequest (CommData* request);
   };
 
 } /* namespace NS_NaviCommon */

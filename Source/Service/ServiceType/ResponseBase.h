@@ -14,9 +14,15 @@ namespace NS_ServiceType
   class ResponseBase
   {
   public:
-    ResponseBase (){};
+    ResponseBase ()
+    {
+    }
+    ;
     virtual
-    ~ResponseBase (){};
+    ~ResponseBase ()
+    {
+    }
+    ;
 
     bool result;
   };

@@ -17,7 +17,7 @@
 
 namespace NS_NaviCommon
 {
-
+  
   typedef enum
   {
     DATA_TYPE_NONE = 0,
@@ -29,11 +29,11 @@ namespace NS_NaviCommon
     DATA_TYPE_LASER_SCAN,
     DATA_TYPE_MAP,
     DATA_TYPE_TARGET_GOAL,
-  }NaviDataTypes;
-
+  } NaviDataTypes;
+  
   typedef std::multimap<NaviDataTypes, DataProcessQueue*> DataDictionary;
   typedef DataDictionary::iterator DataDictionaryIterator;
-
+  
   class Dispitcher
   {
   public:
@@ -41,71 +41,85 @@ namespace NS_NaviCommon
     ~Dispitcher ()
     {
       DataDictionaryIterator i, end;
-      boost::mutex::scoped_lock lock(data_dict_lock);
-      end = data_dictionary.end();
-      for(i = data_dictionary.begin(); i != end; ++i)
+      boost::mutex::scoped_lock lock (data_dict_lock);
+      end = data_dictionary.end ();
+      for (i = data_dictionary.begin (); i != end; ++i)
       {
         DataProcessQueue* data_item_ptr = (*i).second;
-        data_item_ptr->stopProcess();
+        data_item_ptr->stopProcess ();
       }
-    };
+    }
+    ;
     Dispitcher ()
-    {};
+    {
+    }
+    ;
 
   private:
     DataDictionary data_dictionary;
     boost::mutex data_dict_lock;
 
   public:
-    bool initialize()
+    bool
+    initialize ()
     {
       return true;
-    };
+    }
+    ;
 
-    bool remap(NaviDataTypes publish_type, NaviDataTypes remap_type)
+    bool
+    remap (NaviDataTypes publish_type, NaviDataTypes remap_type)
     {
       return true;
-    };
+    }
+    ;
 
-    bool publish(NaviDataTypes publish_type, DataBase* publish_data)
+    bool
+    publish (NaviDataTypes publish_type, DataBase* publish_data)
     {
-      boost::mutex::scoped_lock lock(data_dict_lock);
+      boost::mutex::scoped_lock lock (data_dict_lock);
       std::pair<DataDictionaryIterator, DataDictionaryIterator> ranger;
-      ranger = data_dictionary.equal_range(publish_type);
-      for(DataDictionaryIterator it = ranger.first; it != ranger.second; ++it)
+      ranger = data_dictionary.equal_range (publish_type);
+      for (DataDictionaryIterator it = ranger.first; it != ranger.second; ++it)
       {
         DataProcessQueue* data_item_ptr = it->second;
-        if(data_item_ptr == NULL)
+        if (data_item_ptr == NULL)
         {
           //throw NullPointException("Data item point is null!", data_item_ptr);
           return false;
         }
-        data_item_ptr->append(publish_data);
+        data_item_ptr->append (publish_data);
       }
       return true;
-    };
+    }
+    ;
 
-    bool subscribe(NaviDataTypes subscribe_type, boost::function<void (DataBase*)> callback)
+    bool
+    subscribe (NaviDataTypes subscribe_type, boost::function<void
+    (DataBase*)> callback)
     {
-      boost::mutex::scoped_lock lock(data_dict_lock);
+      boost::mutex::scoped_lock lock (data_dict_lock);
       DataQueue* queue = new DataQueue;
-      if(queue == NULL)
+      if (queue == NULL)
       {
         //throw NullPointException("Create queue fail!", queue);
         return false;
       }
-      DataProcessQueue* data_item_ptr = new DataProcessQueue();
-      if(data_item_ptr == NULL)
+      DataProcessQueue* data_item_ptr = new DataProcessQueue ();
+      if (data_item_ptr == NULL)
       {
         //throw NullPointException("Create data item fail!", data_item_ptr);
         return false;
       }
-      data_item_ptr->setCallback(callback);
-      data_item_ptr->setFrequency(DEFAULT_DATA_PROCESS_RATE);
-      data_item_ptr->startProcess();
-      data_dictionary.insert(std::pair<NaviDataTypes, DataProcessQueue*>(subscribe_type, data_item_ptr));
+      data_item_ptr->setCallback (callback);
+      data_item_ptr->setFrequency (DEFAULT_DATA_PROCESS_RATE);
+      data_item_ptr->startProcess ();
+      data_dictionary.insert (
+          std::pair<NaviDataTypes, DataProcessQueue*> (subscribe_type,
+                                                       data_item_ptr));
       return true;
-    };
+    }
+    ;
   };
 
 } /* namespace NS_NaviCommon */

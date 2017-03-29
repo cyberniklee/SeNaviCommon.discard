@@ -1,4 +1,3 @@
-
 #ifndef _MESSAGE_FORWARD_H_
 #define _MESSAGE_FORWARD_H_
 
@@ -12,7 +11,8 @@
 #ifndef _LIBCPP_VERSION
 namespace std
 {
-template<typename T> class allocator;
+  template<typename T>
+    class allocator;
 }
 #else
 #include <memory>
@@ -20,7 +20,8 @@ template<typename T> class allocator;
 
 namespace boost
 {
-template<typename T> class shared_ptr;
+  template<typename T>
+    class shared_ptr;
 }
 
 /**

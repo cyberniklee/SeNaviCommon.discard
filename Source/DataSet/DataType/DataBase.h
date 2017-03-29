@@ -15,10 +15,14 @@ namespace NS_DataType
   {
   public:
     DataBase ()
-    {};
+    {
+    }
+    ;
     virtual
     ~DataBase ()
-    {};
+    {
+    }
+    ;
   };
 
 } /* namespace NS_NaviCommon */

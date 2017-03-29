@@ -20,16 +20,21 @@ namespace NS_NaviCommon
   class DataQueue
   {
   public:
-    DataQueue()
+    DataQueue ()
     {
       capacity_ = 10;
-    };
-    DataQueue(int capacity)
+    }
+    ;
+    DataQueue (int capacity)
     {
       this->capacity_ = capacity;
-    };
-    virtual ~DataQueue()
-    {};
+    }
+    ;
+    virtual
+    ~DataQueue ()
+    {
+    }
+    ;
 
   private:
     boost::mutex data_queue_lock;
@@ -37,44 +42,54 @@ namespace NS_NaviCommon
     int capacity_;
 
   public:
-    void append(DataBase* item)
+    void
+    append (DataBase* item)
     {
-      boost::mutex::scoped_lock lock(data_queue_lock);
-      if(data_queue.size() >= capacity_)
+      boost::mutex::scoped_lock lock (data_queue_lock);
+      if (data_queue.size () >= capacity_)
       {
         //throw DataQueueException("Data queue is full!");
         return;
       }
-      data_queue.push(item);
-    };
+      data_queue.push (item);
+    }
+    ;
 
-    DataBase* front()
+    DataBase*
+    front ()
     {
       DataBase* item;
-      boost::mutex::scoped_lock lock(data_queue_lock);
-      item = data_queue.front();
-      data_queue.pop();
+      boost::mutex::scoped_lock lock (data_queue_lock);
+      item = data_queue.front ();
+      data_queue.pop ();
       return item;
-    };
+    }
+    ;
 
-    int size()
+    int
+    size ()
     {
-      boost::mutex::scoped_lock lock(data_queue_lock);
-      return data_queue.size();
-    };
+      boost::mutex::scoped_lock lock (data_queue_lock);
+      return data_queue.size ();
+    }
+    ;
 
-    bool isEmpty()
+    bool
+    isEmpty ()
     {
       bool is_empty;
-      boost::mutex::scoped_lock lock(data_queue_lock);
-      is_empty = data_queue.empty();
+      boost::mutex::scoped_lock lock (data_queue_lock);
+      is_empty = data_queue.empty ();
       return is_empty;
-    };
+    }
+    ;
 
-    void setCapacity(int capacity)
+    void
+    setCapacity (int capacity)
     {
       this->capacity_ = capacity;
-    };
+    }
+    ;
   };
 
 } /* namespace NS_NaviCommon */

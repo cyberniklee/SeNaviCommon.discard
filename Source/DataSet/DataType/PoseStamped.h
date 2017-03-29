@@ -8,42 +8,42 @@
 #ifndef _DATATYPE_POSESTAMPED_H_
 #define _DATATYPE_POSESTAMPED_H_
 
-
 #include "DataBase.h"
 #include "DataHeader.h"
 #include "Pose.h"
 
 namespace NS_DataType
 {
-
-  template <class ContainerAllocator>
-  struct PoseStamped_ : public DataBase
-  {
-    typedef PoseStamped_<ContainerAllocator> Type;
-  public:
-    PoseStamped_ () : header(), pose()
+  
+  template<class ContainerAllocator>
+    struct PoseStamped_: public DataBase
     {
+      typedef PoseStamped_<ContainerAllocator> Type;
+    public:
+      PoseStamped_ ()
+          : header (), pose ()
+      {
+      }
+      ;
+
+      PoseStamped_ (const ContainerAllocator& allocator)
+          : header (allocator), pose (allocator)
+      {
+      }
+      ;
+
+      DataHeader_<ContainerAllocator> header;
+      Pose_<ContainerAllocator> pose;
+
+      typedef boost::shared_ptr<PoseStamped_<ContainerAllocator> > Ptr;
+      typedef boost::shared_ptr<PoseStamped_<ContainerAllocator> const> ConstPtr;
     };
-
-    PoseStamped_ (const ContainerAllocator& allocator) : header(allocator), pose(allocator)
-    {
-    };
-
-    DataHeader_<ContainerAllocator> header;
-    Pose_<ContainerAllocator> pose;
-
-    typedef boost::shared_ptr<PoseStamped_<ContainerAllocator> > Ptr;
-    typedef boost::shared_ptr<PoseStamped_<ContainerAllocator> const> ConstPtr;
-  };
-
+  
   typedef PoseStamped_<std::allocator<void> > PoseStamped;
-
+  
   typedef boost::shared_ptr<PoseStamped> PoseStampedPtr;
   typedef boost::shared_ptr<PoseStamped const> PoseStampedConstPtr;
 
-
 }
-
-
 
 #endif /* _POSESTAMPED_H_ */

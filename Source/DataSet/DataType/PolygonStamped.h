@@ -14,35 +14,36 @@
 
 namespace NS_DataType
 {
-
-  template <class ContainerAllocator>
-  struct PolygonStamped_ : public DataBase
-  {
-    typedef PolygonStamped_<ContainerAllocator> Type;
-  public:
-    PolygonStamped_ () : header(), polygon()
+  
+  template<class ContainerAllocator>
+    struct PolygonStamped_: public DataBase
     {
+      typedef PolygonStamped_<ContainerAllocator> Type;
+    public:
+      PolygonStamped_ ()
+          : header (), polygon ()
+      {
+      }
+      ;
+
+      PolygonStamped_ (const ContainerAllocator& allocator)
+          : header (allocator), polygon (allocator)
+      {
+      }
+      ;
+
+      DataHeader_<ContainerAllocator> header;
+      Polygon_<ContainerAllocator> polygon;
+
+      typedef boost::shared_ptr<PolygonStamped_<ContainerAllocator> > Ptr;
+      typedef boost::shared_ptr<PolygonStamped_<ContainerAllocator> const> ConstPtr;
     };
-
-    PolygonStamped_ (const ContainerAllocator& allocator) : header(allocator), polygon(allocator)
-    {
-    };
-
-    DataHeader_<ContainerAllocator> header;
-    Polygon_<ContainerAllocator> polygon;
-
-    typedef boost::shared_ptr<PolygonStamped_<ContainerAllocator> > Ptr;
-    typedef boost::shared_ptr<PolygonStamped_<ContainerAllocator> const> ConstPtr;
-  };
-
+  
   typedef PolygonStamped_<std::allocator<void> > PolygonStamped;
-
+  
   typedef boost::shared_ptr<PolygonStamped> PolygonStampedPtr;
   typedef boost::shared_ptr<PolygonStamped const> PolygonStampedConstPtr;
 
-
 }
-
-
 
 #endif /* DATASET_DATATYPE_POLYGONSTAMPED_H_ */

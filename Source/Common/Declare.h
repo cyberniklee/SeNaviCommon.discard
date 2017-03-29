@@ -8,7 +8,6 @@
 #ifndef _DECLARE_H_
 #define _DECLARE_H_
 
-
 #include <string>
 #include <vector>
 #include <map>
@@ -24,7 +23,7 @@ namespace NS_NaviCommon
   typedef std::set<std::string> StringSet;
   typedef std::map<std::string, std::string> StringMap;
   typedef std::pair<std::string, std::string> StringPair;
-
+  
   typedef boost::shared_ptr<StringMap> StringMapPtr;
 }
 

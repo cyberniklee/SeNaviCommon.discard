@@ -29,43 +29,46 @@ namespace NS_NaviCommon
   {
     // TODO Auto-generated destructor stub
   }
-
-  bool NetTranceiver::open()
+  
+  bool
+  NetTranceiver::open ()
   {
-    bzero(&local_addr, sizeof(local_addr));
+    bzero (&local_addr, sizeof(local_addr));
     local_addr.sin_family = AF_INET;
-    local_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    local_addr.sin_port = htons(bind_to_port);
-
-    bzero(&remote_addr, sizeof(remote_addr));
+    local_addr.sin_addr.s_addr = inet_addr ("127.0.0.1");
+    local_addr.sin_port = htons (bind_to_port);
+    
+    bzero (&remote_addr, sizeof(remote_addr));
     remote_addr.sin_family = AF_INET;
-    remote_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    remote_addr.sin_port = htons(remote_port_);
-
-    handle = ::socket(AF_INET, SOCK_DGRAM, 0);
-    if(handle < 0)
+    remote_addr.sin_addr.s_addr = inet_addr ("127.0.0.1");
+    remote_addr.sin_port = htons (remote_port_);
+    
+    handle = ::socket (AF_INET, SOCK_DGRAM, 0);
+    if (handle < 0)
     {
       return false;
     }
-
-    if(::bind(handle, (sockaddr*)&local_addr, sizeof(local_addr)) < 0)
+    
+    if (::bind (handle, (sockaddr*) &local_addr, sizeof(local_addr)) < 0)
     {
-      ::close(handle);
+      ::close (handle);
       return false;
     }
-
-    ::fcntl(handle, F_SETFL, O_NONBLOCK);
-
+    
+    ::fcntl (handle, F_SETFL, O_NONBLOCK);
+    
     return true;
   }
-
-  bool NetTranceiver::close()
+  
+  bool
+  NetTranceiver::close ()
   {
-    ::close(handle);
+    ::close (handle);
     return true;
   }
-
-  int NetTranceiver::receive(unsigned char* buffer, int length, int wait_seconds)
+  
+  int
+  NetTranceiver::receive (unsigned char* buffer, int length, int wait_seconds)
   {
     struct timeval tv;
     int count = 0;
@@ -75,28 +78,38 @@ namespace NS_NaviCommon
     FD_SET(handle, &rcv_fd);
     tv.tv_sec = wait_seconds;
     tv.tv_usec = 0;
-    int ret = select(handle + 1, &rcv_fd, NULL, NULL, &tv);
-    if(ret > 0)
+    int ret = select (handle + 1, &rcv_fd, NULL, NULL, &tv);
+    if (ret > 0)
     {
-      if(FD_ISSET(handle, &rcv_fd))
+      if (FD_ISSET(handle, &rcv_fd))
       {
-        if((count = ::recvfrom(handle, buffer, length, 0, (struct sockaddr*)&remote_addr, (socklen_t*)&addr_len)) >= 0)
+        if ((count = ::recvfrom (handle, buffer, length, 0,
+                                 (struct sockaddr*) &remote_addr,
+                                 (socklen_t*) &addr_len)) >= 0)
         {
           return count;
-        }else{
+        }
+        else
+        {
           return NET_RX_FAILURE;
         }
       }
-    }else if(ret == 0){
+    }
+    else if (ret == 0)
+    {
       return NET_RX_TIMEOUT;
-    }else{
+    }
+    else
+    {
       return NET_RX_FAILURE;
     }
   }
-
-  int NetTranceiver::transmit(unsigned char* buffer, int length)
+  
+  int
+  NetTranceiver::transmit (unsigned char* buffer, int length)
   {
-    return ::sendto(handle, buffer, length, 0, (struct sockaddr*)&remote_addr, sizeof(sockaddr_in));
+    return ::sendto (handle, buffer, length, 0, (struct sockaddr*) &remote_addr,
+                     sizeof(sockaddr_in));
   }
 
 } /* namespace NS_NaviCommon */

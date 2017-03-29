@@ -14,9 +14,15 @@ namespace NS_ServiceType
   class RequestBase
   {
   public:
-    RequestBase (){};
+    RequestBase ()
+    {
+    }
+    ;
     virtual
-    ~RequestBase (){};
+    ~RequestBase ()
+    {
+    }
+    ;
   };
 
 } /* namespace NS_NaviCommon */

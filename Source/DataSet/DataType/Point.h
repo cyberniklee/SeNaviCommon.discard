@@ -14,33 +14,36 @@
 #include <boost/shared_ptr.hpp>
 #include "DataBase.h"
 
-namespace NS_DataType {
-
-template <class ContainerAllocator>
-struct Point_ : public DataBase
+namespace NS_DataType
 {
-	typedef Point_<ContainerAllocator> Type;
+  
+  template<class ContainerAllocator>
+    struct Point_: public DataBase
+    {
+      typedef Point_<ContainerAllocator> Type;
 
-	Point_(): x(0.0), y(0.0), z(0.0)
-	{
-	}
+      Point_ ()
+          : x (0.0), y (0.0), z (0.0)
+      {
+      }
+      
+      Point_ (const ContainerAllocator& _alloc)
+          : x (0.0), y (0.0), z (0.0)
+      {
+      }
+      
+      typedef double _x_type, _y_type, _z_type;
 
-	Point_(const ContainerAllocator& _alloc): x(0.0), y(0.0), z(0.0)
-	{
-	}
+      double x, y, z;
 
-	typedef double _x_type, _y_type, _z_type;
-
-	double x, y, z;
-
-	typedef boost::shared_ptr<Point_<ContainerAllocator> > Ptr;
-	typedef boost::shared_ptr<Point_<ContainerAllocator> const> ConstPtr;
-};
-
-typedef Point_<std::allocator<void> > Point;
-
-typedef boost::shared_ptr<Point> PointPtr;
-typedef boost::shared_ptr<Point const> PointConstPtr;
+      typedef boost::shared_ptr<Point_<ContainerAllocator> > Ptr;
+      typedef boost::shared_ptr<Point_<ContainerAllocator> const> ConstPtr;
+    };
+  
+  typedef Point_<std::allocator<void> > Point;
+  
+  typedef boost::shared_ptr<Point> PointPtr;
+  typedef boost::shared_ptr<Point const> PointConstPtr;
 
 }
 

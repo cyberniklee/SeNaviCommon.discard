@@ -36,13 +36,17 @@ namespace NS_NaviCommon
   private:
     XMLNode main_node;
   public:
-    bool loadConfigurationFile(const std::string file_name);
+    bool
+    loadConfigurationFile (const std::string file_name);
 
-    std::string getParameter(const std::string node_name, const std::string default_value);
+    std::string
+    getParameter (const std::string node_name, const std::string default_value);
 
-    int getParameter(const std::string node_name, const int default_value);
+    int
+    getParameter (const std::string node_name, const int default_value);
 
-    float getParameter(const std::string node_name, const float default_value);
+    float
+    getParameter (const std::string node_name, const float default_value);
   };
 
 } /* namespace NS_NaviCommon */

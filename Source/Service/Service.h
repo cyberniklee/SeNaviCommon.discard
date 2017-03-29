@@ -29,54 +29,70 @@ namespace NS_NaviCommon
     SERVICE_TYPE_ODOMETRY_BASE_TRANSFORM,
     SERVICE_TYPE_MAP_ODOMETRY_TRANSFORM,
     SERVICE_TYPE_COSTMAP,
-  }NaviServiceTypes;
-
-  typedef boost::function<void (NS_ServiceType::RequestBase*, NS_ServiceType::ResponseBase*)> ServiceEntryType;
-
+  } NaviServiceTypes;
+  
+  typedef boost::function<void
+  (NS_ServiceType::RequestBase*, NS_ServiceType::ResponseBase*)> ServiceEntryType;
+  
   typedef std::multimap<NaviServiceTypes, ServiceEntryType> ServiceDictionary;
   typedef ServiceDictionary::iterator ServiceDictionaryIterator;
-
+  
   class Service
   {
   public:
-    Service (){};
+    Service ()
+    {
+    }
+    ;
     virtual
-    ~Service (){};
+    ~Service ()
+    {
+    }
+    ;
   private:
     ServiceDictionary service_dictionary;
     boost::mutex service_dict_lock;
 
   public:
-    bool initialize()
+    bool
+    initialize ()
     {
-
+      
       return true;
     }
-
-    bool advertise(NaviServiceTypes service_type, ServiceEntryType service_entry)
+    
+    bool
+    advertise (NaviServiceTypes service_type, ServiceEntryType service_entry)
     {
-      boost::mutex::scoped_lock lock(service_dict_lock);
-      service_dictionary.insert(std::pair<NaviServiceTypes, ServiceEntryType>(service_type, service_entry));
+      boost::mutex::scoped_lock lock (service_dict_lock);
+      service_dictionary.insert (
+          std::pair<NaviServiceTypes, ServiceEntryType> (service_type,
+                                                         service_entry));
       return true;
-    };
+    }
+    ;
 
-    bool call(NaviServiceTypes service_type, NS_ServiceType::RequestBase* request, NS_ServiceType::ResponseBase* response)
+    bool
+    call (NaviServiceTypes service_type, NS_ServiceType::RequestBase* request,
+          NS_ServiceType::ResponseBase* response)
     {
-      boost::mutex::scoped_lock lock(service_dict_lock);
+      boost::mutex::scoped_lock lock (service_dict_lock);
       std::pair<ServiceDictionaryIterator, ServiceDictionaryIterator> ranger;
-      ranger = service_dictionary.equal_range(service_type);
-      for(ServiceDictionaryIterator it = ranger.first; it != ranger.second; ++it)
+      ranger = service_dictionary.equal_range (service_type);
+      for (ServiceDictionaryIterator it = ranger.first; it != ranger.second;
+          ++it)
       {
         ServiceEntryType entry = it->second;
-        if(entry == NULL)
+        if (entry == NULL)
         {
           //throw NullPointException("Entry point is null!", entry);
           return false;
         }
-        entry(request, response);
+        entry (request, response);
       }
       return true;
-    };
+    }
+    ;
   };
 
 } /* namespace NS_NaviCommon */

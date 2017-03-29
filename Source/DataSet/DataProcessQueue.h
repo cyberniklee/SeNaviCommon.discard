@@ -18,66 +18,79 @@
 namespace NS_NaviCommon
 {
   using namespace NS_DataType;
-
-  #define DEFAULT_DATA_PROCESS_RATE 10.0
-
-  class DataProcessQueue : public DataQueue
+  
+#define DEFAULT_DATA_PROCESS_RATE 10.0
+  
+  class DataProcessQueue: public DataQueue
   {
   private:
     bool running;
     double process_frequency;
 
-    boost::function<void (DataBase*)> callback_;
+    boost::function<void
+    (DataBase*)> callback_;
 
     boost::thread* process_thread_handle;
 
-    void DataProcessThread()
+    void
+    DataProcessThread ()
     {
-      Rate rate(this->process_frequency);
-      while(running)
+      Rate rate (this->process_frequency);
+      while (running)
       {
-        if(!this->isEmpty())
+        if (!this->isEmpty ())
         {
-          DataBase* m = this->front();
-          this->callback_(m);
+          DataBase* m = this->front ();
+          this->callback_ (m);
         }
-        rate.sleep();
+        rate.sleep ();
       }
-    };
+    }
+    ;
     /*
-  public:
-    DataProcessQueue ()
-    {
-      //this->process_frequency = 0.1;
-    };
+     public:
+     DataProcessQueue ()
+     {
+     //this->process_frequency = 0.1;
+     };
 
-    virtual
-    ~DataProcessQueue ();
-    */
+     virtual
+     ~DataProcessQueue ();
+     */
 
   public:
-    void setCallback(boost::function<void (DataBase*)> callback)
+    void
+    setCallback (boost::function<void
+    (DataBase*)> callback)
     {
       this->callback_ = callback;
-    };
+    }
+    ;
 
-    void setFrequency(double frequency)
+    void
+    setFrequency (double frequency)
     {
       this->process_frequency = frequency;
-    };
+    }
+    ;
 
-    void startProcess()
+    void
+    startProcess ()
     {
       running = true;
-      process_thread_handle = new boost::thread(boost::bind(&DataProcessQueue::DataProcessThread, this));
-    };
+      process_thread_handle = new boost::thread (
+          boost::bind (&DataProcessQueue::DataProcessThread, this));
+    }
+    ;
 
-    void stopProcess()
+    void
+    stopProcess ()
     {
       running = false;
-      process_thread_handle->join();
-    };
-
+      process_thread_handle->join ();
+    }
+    ;
+    
   };
 
 } /* namespace NS_NaviCommon */

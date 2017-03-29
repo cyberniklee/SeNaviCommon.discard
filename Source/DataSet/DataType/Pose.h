@@ -14,34 +14,36 @@
 
 namespace NS_DataType
 {
-
-  template <class ContainerAllocator>
-  struct Pose_ : public DataBase
-  {
-    typedef Pose_<ContainerAllocator> Type;
-  public:
-    Pose_ () : position(), orientation()
+  
+  template<class ContainerAllocator>
+    struct Pose_: public DataBase
     {
+      typedef Pose_<ContainerAllocator> Type;
+    public:
+      Pose_ ()
+          : position (), orientation ()
+      {
+      }
+      ;
+
+      Pose_ (const ContainerAllocator& allocator)
+          : position (allocator), orientation (allocator)
+      {
+      }
+      ;
+
+      Point_<ContainerAllocator> position;
+      Quaternion_<ContainerAllocator> orientation;
+
+      typedef boost::shared_ptr<Pose_<ContainerAllocator> > Ptr;
+      typedef boost::shared_ptr<Pose_<ContainerAllocator> const> ConstPtr;
     };
-
-    Pose_ (const ContainerAllocator& allocator) : position(allocator), orientation(allocator)
-    {
-    };
-
-    Point_<ContainerAllocator> position;
-    Quaternion_<ContainerAllocator> orientation;
-
-    typedef boost::shared_ptr<Pose_<ContainerAllocator> > Ptr;
-    typedef boost::shared_ptr<Pose_<ContainerAllocator> const> ConstPtr;
-  };
-
+  
   typedef Pose_<std::allocator<void> > Pose;
-
+  
   typedef boost::shared_ptr<Pose> PosePtr;
   typedef boost::shared_ptr<Pose const> PoseConstPtr;
 
 }
-
-
 
 #endif /* _POSE_H_ */

@@ -13,107 +13,112 @@
 #include <boost/thread/condition.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-namespace NS_NaviCommon{
-
-class Condition
+namespace NS_NaviCommon
 {
-public:
+  
+  class Condition
+  {
+  public:
+    
+    enum
+    {
+      COND_OK = 1, COND_TIMEOUT = -1, COND_FAILED = 0,
+    };
 
     enum
     {
-        COND_OK = 1,
-        COND_TIMEOUT = -1,
-        COND_FAILED = 0,
+      INFINITE_WAIT = 0xFFFFFFFF,
     };
 
-    enum{
-        INFINITE_WAIT = 0xFFFFFFFF,
-    };
-
-    Condition(bool isAutoReset = true, bool isSignal = false)
-        : _is_signalled(isSignal)
-        , _isAutoReset(isAutoReset)
+    Condition (bool isAutoReset = true, bool isSignal = false)
+        : _is_signalled (isSignal), _isAutoReset (isAutoReset)
     {
-
+      
     }
-
-    ~ Condition()
+    
+    ~ Condition ()
     {
-        release();
+      release ();
     }
-
-    void set( bool isSignal = true )
+    
+    void
+    set (bool isSignal = true)
     {
-        if (isSignal)
+      if (isSignal)
+      {
+        _cond_locker.lock ();
+        
+        if (_is_signalled == false)
         {
-            _cond_locker.lock();
-
-            if ( _is_signalled == false )
-            {
-                _is_signalled = true;
-                _cond_var.notify_one();
-            }
-            _cond_locker.unlock();
+          _is_signalled = true;
+          _cond_var.notify_one ();
+        }
+        _cond_locker.unlock ();
+      }
+      else
+      {
+        _cond_locker.lock ();
+        _is_signalled = false;
+        _cond_locker.unlock ();
+      }
+    }
+    
+    unsigned long
+    wait (unsigned long timeout = INFINITE_WAIT)
+    {
+      unsigned long ans = COND_OK;
+      _cond_locker.lock ();
+      
+      if (!_is_signalled)
+      {
+        
+        if (timeout == INFINITE_WAIT)
+        {
+          _cond_var.wait (_cond_locker);
         }
         else
         {
-            _cond_locker.lock();
-            _is_signalled = false;
-            _cond_locker.unlock();
+          
+          if (_cond_var.timed_wait (
+              _cond_locker,
+              (boost::get_system_time () + boost::posix_time::seconds (timeout))))
+          {
+            // signalled
+          }
+          else
+          {
+            ans = COND_TIMEOUT;
+            goto _final;
+          }
+          
         }
+      }
+      
+      assert(_is_signalled);
+      
+      if (_isAutoReset)
+      {
+        _is_signalled = false;
+      }
+      _final: _cond_locker.unlock ();
+      
+      return ans;
+      
     }
-
-    unsigned long wait( unsigned long timeout = INFINITE_WAIT )
+  protected:
+    
+    void
+    release ()
     {
-        unsigned long ans = COND_OK;
-        _cond_locker.lock();
-
-        if ( !_is_signalled )
-        {
-
-                if (timeout == INFINITE_WAIT){
-                    _cond_var.wait(_cond_locker);
-                }else
-                {
-
-                    if (_cond_var.timed_wait(_cond_locker, (boost::get_system_time() + boost::posix_time::seconds(timeout))))
-                    {
-                        // signalled
-                    }else{
-                        ans = COND_TIMEOUT;
-                        goto _final;
-                    }
-
-            }
-        }
-
-        assert(_is_signalled);
-
-        if ( _isAutoReset )
-        {
-            _is_signalled = false;
-        }
-_final:
-        _cond_locker.unlock();
-
-        return ans;
-
+      
     }
-protected:
-
-    void release()
-    {
-
-    }
-
-        boost::condition       _cond_var;
-        boost::mutex           _cond_locker;
-        bool                   _is_signalled;
-        bool                   _isAutoReset;
-};
+    
+    boost::condition _cond_var;
+    boost::mutex _cond_locker;
+    bool _is_signalled;
+    bool _isAutoReset;
+  };
 
 }
-
-
 
 #endif /* THREAD_CONDITION_H_ */

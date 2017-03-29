@@ -10,22 +10,26 @@
 
 #include <time.h>
 
-namespace NS_CommDataType{
-
-  enum {
+namespace NS_CommDataType
+{
+  
+  enum
+  {
     COMMUNICATION_DATA_TYPE_NULL = 0,
     COMMUNICATION_DATA_TYPE_REQUEST,
     COMMUNICATION_DATA_TYPE_RESPONSE,
   };
-
-  enum {
+  
+  enum
+  {
     COMMUNICATION_DATA_REASON_NULL = 0,
     COMMUNICATION_DATA_REASON_MAP,
     COMMUNICATION_DATA_REASON_POSE,
     COMMUNICATION_DATA_REASON_PATH,
   };
-
-  struct CommData{
+  
+  struct CommData
+  {
     unsigned char type;
     unsigned char reason;
     unsigned long sequence;
@@ -36,7 +40,5 @@ namespace NS_CommDataType{
   }__attribute__((packed));
 
 }
-
-
 
 #endif /* COMMUNICATION_DATATYPE_COMMDATABASE_H_ */

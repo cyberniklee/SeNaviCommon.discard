@@ -15,13 +15,13 @@
 
 namespace NS_NaviCommon
 {
-  enum {
-    NET_RX_TIMEOUT = -1,
-    NET_RX_FAILURE = -2,
+  enum
+  {
+    NET_RX_TIMEOUT = -1, NET_RX_FAILURE = -2,
   };
-
-  #define NET_RX_WAIT 1
-
+  
+#define NET_RX_WAIT 1
+  
   class NetTranceiver
   {
   public:
@@ -39,10 +39,14 @@ namespace NS_NaviCommon
     boost::mutex lock;
 
   public:
-    bool open();
-    bool close();
-    int receive(unsigned char* buffer, int length, int wait_seconds = NET_RX_WAIT);
-    int transmit(unsigned char* buffer, int length);
+    bool
+    open ();
+    bool
+    close ();
+    int
+    receive (unsigned char* buffer, int length, int wait_seconds = NET_RX_WAIT);
+    int
+    transmit (unsigned char* buffer, int length);
   };
 
 } /* namespace NS_NaviCommon */

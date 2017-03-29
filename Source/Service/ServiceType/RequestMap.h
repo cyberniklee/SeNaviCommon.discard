@@ -12,29 +12,30 @@
 
 namespace NS_ServiceType
 {
-
-  template <class ContainerAllocator>
-  struct RequestMap_ : public RequestBase
-  {
-    typedef RequestMap_<ContainerAllocator> Type;
-  public:
-    RequestMap_ ()
+  
+  template<class ContainerAllocator>
+    struct RequestMap_: public RequestBase
     {
+      typedef RequestMap_<ContainerAllocator> Type;
+    public:
+      RequestMap_ ()
+      {
+      }
+      ;
+
+      RequestMap_ (const ContainerAllocator& allocator)
+      {
+      }
+      ;
+
+      typedef boost::shared_ptr<RequestMap_<ContainerAllocator> > Ptr;
+      typedef boost::shared_ptr<RequestMap_<ContainerAllocator> const> ConstPtr;
     };
-
-    RequestMap_ (const ContainerAllocator& allocator)
-    {
-    };
-
-    typedef boost::shared_ptr<RequestMap_<ContainerAllocator> > Ptr;
-    typedef boost::shared_ptr<RequestMap_<ContainerAllocator> const> ConstPtr;
-  };
-
+  
   typedef RequestMap_<std::allocator<void> > RequestMap;
-
+  
   typedef boost::shared_ptr<RequestMap> RequestMapPtr;
   typedef boost::shared_ptr<RequestMap const> RequestMapConstPtr;
-
 
 }
 
