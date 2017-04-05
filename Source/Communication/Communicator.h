@@ -93,6 +93,12 @@ namespace NS_NaviCommon
     createRequestMessage (unsigned char reason);
     CommData*
     createResponseByRequest (CommData* request);
+
+    void
+    setChild (Communicator* instance_)
+    {
+      instance = instance_;
+    };
   };
 
 } /* namespace NS_NaviCommon */
