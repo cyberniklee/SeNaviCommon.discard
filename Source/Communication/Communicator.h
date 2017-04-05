@@ -70,8 +70,10 @@ namespace NS_NaviCommon
     findResponse (unsigned long seq, unsigned char reason);
   protected:
     Communicator* instance;
+
     virtual void
-    onReceive (CommData* message);
+    onReceive (CommData* message) = 0;
+
   public:
     bool
     initialize (int local_port, int remote_port);
