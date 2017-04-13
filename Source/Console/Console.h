@@ -12,6 +12,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string>
+#include <fstream>
 
 using namespace std;
 namespace NS_NaviCommon
@@ -105,6 +106,12 @@ namespace NS_NaviCommon
   };
   
   static Console console;
+
+  void
+  disableStdoutStream ();
+
+  void
+  redirectStdoutStream (std::string out_file);
 
 }
 
