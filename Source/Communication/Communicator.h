@@ -72,7 +72,7 @@ namespace NS_NaviCommon
     Communicator* instance;
 
     virtual void
-    onReceive (CommData* message) = 0;
+    onReceive (CommData* message);
 
   public:
     bool
