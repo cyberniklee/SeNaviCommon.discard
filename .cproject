@@ -155,7 +155,8 @@
 				<configuration artifactExtension="so" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.so.debug.673620987.1100038144" name="Build" parent="cdt.managedbuild.config.gnu.cross.so.debug" postbuildStep="">
 					<folderInfo id="cdt.managedbuild.config.gnu.cross.so.debug.673620987.1100038144." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.so.debug.1456039316" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.so.debug">
-							<option id="cdt.managedbuild.option.gnu.cross.path.790293681" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="/usr/bin/" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.790293681" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="/usr/bin/openwrt" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.915218694" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-openwrt" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.900344074" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
 							<builder buildPath="${workspace_loc:/SeNaviCommom}/Debug" id="cdt.managedbuild.builder.gnu.cross.1260067757" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross">
 								<outputEntries>
@@ -224,6 +225,9 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Build">
+			<resource resourceType="PROJECT" workspacePath="/SeNaviCommon"/>
+		</configuration>
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/SeNaviCommon"/>
 		</configuration>

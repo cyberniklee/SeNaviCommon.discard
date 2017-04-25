@@ -53,7 +53,7 @@ all: libSeNaviCommon.so
 libSeNaviCommon.so: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -shared -o "libSeNaviCommon.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	$(TARGET_CXX) -shared -o "libSeNaviCommon.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
