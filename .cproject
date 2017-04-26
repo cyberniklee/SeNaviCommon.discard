@@ -147,16 +147,18 @@
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 				<configuration artifactExtension="so" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.cross.so.debug.673620987.1100038144" name="Build" parent="cdt.managedbuild.config.gnu.cross.so.debug" postbuildStep="">
 					<folderInfo id="cdt.managedbuild.config.gnu.cross.so.debug.673620987.1100038144." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.so.debug.1456039316" name="Cross GCC" nonInternalBuilderId="cdt.managedbuild.builder.gnu.cross" superClass="cdt.managedbuild.toolchain.gnu.cross.so.debug">
-							<option id="cdt.managedbuild.option.gnu.cross.path.790293681" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="/usr/bin/" valueType="string"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.790293681" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="/usr/bin" valueType="string"/>
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.915218694" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-openwrt-linux-muslgnueabi-" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.900344074" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder autoBuildTarget="all" buildPath="${workspace_loc:/SeNaviCommon}/Build" cleanBuildTarget="clean" id="org.eclipse.cdt.build.core.internal.builder.58982529" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="org.eclipse.cdt.build.core.internal.builder"/>
+							<builder buildPath="${workspace_loc:/SeNaviCommon}/Build" id="cdt.managedbuild.builder.gnu.cross.1377928405" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.717450438" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.110622616" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.160690102" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
