@@ -26,6 +26,8 @@ namespace NS_NaviCommon
   class Console
   {
   public:
+    bool dbg_msg_on = false;
+  public:
     void
     message (const char* message_, ...)
     {
@@ -79,14 +81,17 @@ namespace NS_NaviCommon
     {
       char out[1024] = { 0 };
       va_list args;
-      va_start(args, message_);
-      vsnprintf (out, sizeof(out), message_, args);
-      va_end(args);
-      printf (COLOR_CYAN);
-      printf (">>>   ");
-      printf (out);
-      printf (COLOR_NONE);
-      printf ("\r\n");
+      if (dbg_msg_on)
+      {
+        va_start(args, message_);
+        vsnprintf (out, sizeof(out), message_, args);
+        va_end(args);
+        printf (COLOR_CYAN);
+        printf (">>>   ");
+        printf (out);
+        printf (COLOR_NONE);
+        printf ("\r\n");
+      }
     }
     ;
 
