@@ -34,8 +34,8 @@ namespace NS_NaviCommon
   void
   Communicator::timeoutProcess ()
   {
-    NS_NaviCommon::Rate rate (1);
-    
+    NS_NaviCommon::Rate rate (5);
+
     while (running)
     {
       time_t cur_time;
@@ -109,7 +109,8 @@ namespace NS_NaviCommon
       if (new_data->type == COMMUNICATION_DATA_TYPE_REQUEST)
       {
         //request
-        if (work_thread_count <= MAX_WORK_THREADS)
+        //if (work_thread_count <= MAX_WORK_THREADS)
+        if (1)
         {
           boost::thread excute_thread (
               boost::bind (&Communicator::receiveMessageProcess, this,
