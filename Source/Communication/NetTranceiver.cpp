@@ -91,6 +91,7 @@ namespace NS_NaviCommon
         }
         else
         {
+printf("************************%d,******%d**************************\n", count, errno);
           return NET_RX_FAILURE;
         }
       }

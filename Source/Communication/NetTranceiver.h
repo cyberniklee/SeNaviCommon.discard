@@ -17,7 +17,8 @@ namespace NS_NaviCommon
 {
   enum
   {
-    NET_RX_TIMEOUT = -1, NET_RX_FAILURE = -2,
+    NET_RX_TIMEOUT = -1,
+    NET_RX_FAILURE = -2,
   };
   
 #define NET_RX_WAIT 1
