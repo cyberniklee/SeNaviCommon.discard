@@ -17,7 +17,6 @@ namespace NS_NaviCommon
   
   Communicator::Communicator ()
   {
-    // TODO Auto-generated constructor stub
     tranceiver = NULL;
     id_ = 0;
     running = false;
@@ -27,8 +26,11 @@ namespace NS_NaviCommon
   
   Communicator::~Communicator ()
   {
-    // TODO Auto-generated destructor stub
-    
+    if (tranceiver)
+    {
+      tranceiver->close();
+      delete tranceiver;
+    }
   }
   
   void
@@ -109,8 +111,7 @@ namespace NS_NaviCommon
       if (new_data->type == COMMUNICATION_DATA_TYPE_REQUEST)
       {
         //request
-        //if (work_thread_count <= MAX_WORK_THREADS)
-        if (1)
+        if (work_thread_count <= MAX_WORK_THREADS)
         {
           boost::thread excute_thread (
               boost::bind (&Communicator::receiveMessageProcess, this,
