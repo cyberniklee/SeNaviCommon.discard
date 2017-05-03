@@ -50,6 +50,7 @@ namespace NS_NaviCommon
         CommData* data = *it;
         if (cur_time - data->time_stamp > MESSAGE_TIMEOUT)
         {
+printf("---------1------%ld--%ld--\n", cur_time, data->time_stamp);
           msg_holder.erase (it);
           if (data != NULL)
             delete data;
@@ -246,6 +247,7 @@ namespace NS_NaviCommon
         && ((response = findResponse ((*request)->sequence, (*request)->reason))
             == NULL))
     {
+printf("--------------------2--------------------\n");
       holder_cond.timed_wait (
           holder_cond_lock,
           boost::get_system_time ()
@@ -253,7 +255,7 @@ namespace NS_NaviCommon
     }
     
     holder_cond_lock.unlock ();
-    
+    printf("--------------------3--------------------\n");
     return response;
   }
   
