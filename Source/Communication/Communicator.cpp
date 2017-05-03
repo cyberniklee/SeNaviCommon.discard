@@ -81,7 +81,9 @@ printf("---------1------%ld--%ld--\n", cur_time, data->time_stamp);
     int bytes_received = 0;
     while (running)
     {
+printf("===================000===================\n");
       bytes_received = tranceiver->receive (buf, sizeof(buf));
+printf("===================0=====%d==============\n", bytes_received);
       if (bytes_received <= 0)
       {
         continue;
