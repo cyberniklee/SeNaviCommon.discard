@@ -90,15 +90,15 @@ printf("---------1------%ld--%ld--\n", cur_time, data->time_stamp);
       {
         continue;
       }
-      
+printf("===================1===================\n");
       CommData* data = reinterpret_cast<CommData*> (buf);
-      
+printf("===================2===================\n");
       if (data->type == COMMUNICATION_DATA_TYPE_NULL
           || data->reason == COMMUNICATION_DATA_REASON_NULL)
       {
         continue;
       }
-      
+printf("===================3===================\n");
       CommData* new_data = new CommData;
       
       *new_data = *data;
@@ -122,6 +122,7 @@ printf("---------1------%ld--%ld--\n", cur_time, data->time_stamp);
       }
       else
       {
+printf("===================4===================\n");
         //response
         holder_cond_lock.lock ();
         holder_cond.notify_all ();
@@ -255,7 +256,7 @@ printf("--------------------2--------------------\n");
     }
     
     holder_cond_lock.unlock ();
-    printf("--------------------3--------------------\n");
+printf("--------------------3--------------------\n");
     return response;
   }
   
