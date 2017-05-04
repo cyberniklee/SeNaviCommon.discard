@@ -50,7 +50,6 @@ namespace NS_NaviCommon
         CommData* data = *it;
         if (cur_time - data->time_stamp > MESSAGE_TIMEOUT)
         {
-printf("---------1------%ld--%ld--\n", cur_time, data->time_stamp);
           msg_holder.erase (it);
           if (data != NULL)
             delete data;
@@ -81,9 +80,7 @@ printf("---------1------%ld--%ld--\n", cur_time, data->time_stamp);
     int bytes_received = 0;
     while (running)
     {
-printf("===================000===================\n");
       bytes_received = tranceiver->receive (buf, sizeof(buf));
-printf("===================0=====%d==============\n", bytes_received);
       if (bytes_received <= 0)
       {
         continue;
@@ -92,15 +89,12 @@ printf("===================0=====%d==============\n", bytes_received);
       {
         continue;
       }
-printf("===================1===================\n");
       CommData* data = reinterpret_cast<CommData*> (buf);
-printf("===================2===================\n");
       if (data->type == COMMUNICATION_DATA_TYPE_NULL
           || data->reason == COMMUNICATION_DATA_REASON_NULL)
       {
         continue;
       }
-printf("===================3===================\n");
       CommData* new_data = new CommData;
       
       *new_data = *data;
@@ -124,7 +118,6 @@ printf("===================3===================\n");
       }
       else
       {
-printf("===================4===================\n");
         //response
         holder_cond_lock.lock ();
         holder_cond.notify_all ();
@@ -250,7 +243,6 @@ printf("===================4===================\n");
         && ((response = findResponse ((*request)->sequence, (*request)->reason))
             == NULL))
     {
-printf("--------------------2--------------------\n");
       holder_cond.timed_wait (
           holder_cond_lock,
           boost::get_system_time ()
@@ -258,7 +250,6 @@ printf("--------------------2--------------------\n");
     }
     
     holder_cond_lock.unlock ();
-printf("--------------------3--------------------\n");
     return response;
   }
   
