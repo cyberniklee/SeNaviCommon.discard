@@ -26,7 +26,7 @@ namespace NS_NaviCommon
   class Console
   {
   public:
-    bool dbg_msg_on = true;
+    bool dbg_msg_on = false;
   public:
     void
     message (const char* message_, ...)
