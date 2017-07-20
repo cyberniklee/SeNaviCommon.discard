@@ -29,6 +29,7 @@ Source/ConfigFile \
 Source/Console \
 Source/DataSet \
 Source/Exception \
+Source/Mission \
 Source/Parameter \
 Source/Service \
 Source/Time \
