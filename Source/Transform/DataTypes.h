@@ -116,8 +116,7 @@ namespace NS_Transform
     bt = Quaternion (msg.x, msg.y, msg.z, msg.w);
     if (fabs (bt.length2 () - 1) > QUATERNION_TOLERANCE)
     {
-      NS_NaviCommon::console.warning (
-          "MSG to TF: Quaternion Not Properly Normalized");
+      printf ("MSG to TF: Quaternion Not Properly Normalized");
       bt.normalize ();
     }
   }
@@ -128,8 +127,7 @@ namespace NS_Transform
   {
     if (fabs (bt.length2 () - 1) > QUATERNION_TOLERANCE)
     {
-      NS_NaviCommon::console.warning (
-          "TF to MSG: Quaternion Not Properly Normalized");
+      printf ("TF to MSG: Quaternion Not Properly Normalized");
       Quaternion bt_temp = bt;
       bt_temp.normalize ();
       msg.x = bt_temp.x ();
