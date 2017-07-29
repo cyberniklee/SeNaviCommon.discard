@@ -10,6 +10,10 @@
 
 namespace NS_NaviCommon
 {
+  typedef enum
+  {
+    GOAL_TYPE_TARGET_POSE,
+  } MissionGoalType;
 
   typedef enum
   {
@@ -22,20 +26,24 @@ namespace NS_NaviCommon
   class MissionGoal
   {
   public:
-    MissionGoal (int id, NS_GoalType::GoalBase* goal_)
+    MissionGoal (int id, MissionGoalType type_, NS_GoalType::GoalBase* goal_)
     {
       goal = goal_;
       status = GOAL_READY;
       goal_id = id;
+      type = type_;
     }
 
     virtual ~MissionGoal ()
     {
     }
+
   private:
     int goal_id;
     MissionGoalStatus status;
     NS_GoalType::GoalBase* goal;
+    MissionGoalType type;
+
   public:
     void
     start ()

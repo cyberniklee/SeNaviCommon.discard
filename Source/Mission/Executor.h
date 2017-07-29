@@ -8,7 +8,21 @@
 #ifndef _MISSION_EXECUTOR_H_
 #define _MISSION_EXECUTOR_H_
 
+namespace NS_NaviCommon
+{
+  class Executor
+  {
+  public:
+    Executor ();
+    virtual ~Executor ();
+  public:
 
+  };
+
+
+
+
+}
 
 
 
