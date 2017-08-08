@@ -20,7 +20,6 @@ namespace NS_NaviCommon
   
   NetTranceiver::NetTranceiver (int local_port, int remote_port)
   {
-    // TODO Auto-generated constructor stub
     bind_to_port = local_port;
     remote_port_ = remote_port;
   }

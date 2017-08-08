@@ -139,9 +139,6 @@ namespace NS_NaviCommon
   void
   disableStdoutStream ();
 
-  void
-  redirectStdoutStream (std::string out_file);
-
 }
 
 #endif /* _CONSOLE_H_ */
