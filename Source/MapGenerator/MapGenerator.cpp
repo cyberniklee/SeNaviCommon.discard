@@ -59,6 +59,7 @@ namespace NS_NaviCommon
     int resize_height = height;
     int pix255 = 255;
     int pix000 = 000;
+    int pix099 = 99;
     int pix205 = 205;
 
     while ((resize_width % 4) != 0)
@@ -87,6 +88,10 @@ namespace NS_NaviCommon
         else if (map_data[i] == +100)
         { //occ (0.65,1]
           write (pgm_fd,&pix000, 1);
+        }
+        else if (map_data[i] == 99)
+        {
+          write (pgm_fd,&pix099, 1);
         }
         else
         { //occ [0.1,0.65]
