@@ -13,6 +13,7 @@ RM := rm -rf
 -include Source/Service/subdir.mk
 -include Source/Parameter/subdir.mk
 -include Source/Mission/subdir.mk
+-include Source/MapGenerator/subdir.mk
 -include Source/Exception/subdir.mk
 -include Source/DataSet/subdir.mk
 -include Source/Console/subdir.mk
