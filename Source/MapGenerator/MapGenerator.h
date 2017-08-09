@@ -17,12 +17,12 @@ namespace NS_NaviCommon
   class MapGenerator
   {
   public:
-    bool saveMapInPGM (std::vector<int> map_data, int height, int width, std::string pgm_file);
-    bool readMapFromPGM (std::string pgm_file, std::vector<int>& map_data, int& height, int& width);
+    static bool saveMapInPGM (std::vector<char> map_data, int height, int width, std::string pgm_file);
+    static bool readMapFromPGM (std::string pgm_file, std::vector<char>& map_data, int& height, int& width);
 
   private:
-    bool lock (int fd);
-    bool unlock (int fd);
+    static bool lock (int fd);
+    static bool unlock (int fd);
   };
 
 } /* namespace NS_NaviCommon */

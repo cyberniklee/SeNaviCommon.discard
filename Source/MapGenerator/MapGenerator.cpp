@@ -40,7 +40,7 @@ namespace NS_NaviCommon
   }
 
   bool
-  MapGenerator::saveMapInPGM (std::vector<int> map_data, int height, int width, std::string pgm_file)
+  MapGenerator::saveMapInPGM (std::vector<char> map_data, int height, int width, std::string pgm_file)
   {
     int pgm_fd = open (pgm_file.c_str (), O_RDWR);
     if (pgm_fd < 0)
@@ -115,7 +115,7 @@ namespace NS_NaviCommon
   }
   
   bool
-  MapGenerator::readMapFromPGM (std::string pgm_file, std::vector<int>& map_data, int& height, int& width)
+  MapGenerator::readMapFromPGM (std::string pgm_file, std::vector<char>& map_data, int& height, int& width)
   {
     int pgm_fd = open (pgm_file.c_str (), O_RDWR);
     if (pgm_fd < 0)
