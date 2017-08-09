@@ -206,4 +206,22 @@ namespace NS_NaviCommon
 
   }
 
+  bool
+  MapGenerator::addRobotPoseInMap (std::vector<char>& map_data, int map_height, int map_width, int robot_pose_x, int robot_pose_y)
+  {
+    for (int y = 0; y < map_height; y++)
+    {
+      for (int x = 0; x < map_width; x++)
+      {
+        int  k = x + (map_height - y - 1) * map_width;
+        if(x == robot_pose_x && y == robot_pose_y)
+        {
+          map_data[k] = 99;
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 } /* namespace NS_NaviCommon */
