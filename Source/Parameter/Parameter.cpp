@@ -18,14 +18,12 @@ namespace NS_NaviCommon
   
   Parameter::Parameter ()
   {
-    // TODO Auto-generated constructor stub
     main_node = XMLNode::emptyXMLNode;
     
   }
   
   Parameter::~Parameter ()
   {
-    // TODO Auto-generated destructor stub
   }
   
   bool

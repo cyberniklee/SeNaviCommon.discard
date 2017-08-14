@@ -13,7 +13,6 @@ namespace NS_NaviCommon
 /*
  Dispitcher::~Dispitcher ()
  {
- // TODO Auto-generated destructor stub
  DataDictionaryIterator i, end;
  boost::mutex::scoped_lock lock(data_dict_lock);
  end = data_dictionary.end();
@@ -26,7 +25,6 @@ namespace NS_NaviCommon
  
  Dispitcher::Dispitcher ()
  {
- // TODO Auto-generated constructor stub
  
  }
 

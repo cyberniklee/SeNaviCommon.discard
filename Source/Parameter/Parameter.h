@@ -47,6 +47,7 @@ namespace NS_NaviCommon
 
     float
     getParameter (const std::string node_name, const float default_value);
+
   };
 
 } /* namespace NS_NaviCommon */

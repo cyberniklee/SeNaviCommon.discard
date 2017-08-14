@@ -42,7 +42,7 @@ namespace NS_NaviCommon
   bool
   MapGenerator::saveMapInPGM (std::vector<char> map_data, int height, int width, std::string pgm_file)
   {
-    int pgm_fd = open (pgm_file.c_str (), O_RDWR);
+    int pgm_fd = open (pgm_file.c_str (), O_RDWR | O_CREAT);
     if (pgm_fd < 0)
     {
       console.debug ("Open file %s fail!", pgm_file.c_str ());

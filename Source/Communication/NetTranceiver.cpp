@@ -26,7 +26,6 @@ namespace NS_NaviCommon
   
   NetTranceiver::~NetTranceiver ()
   {
-    // TODO Auto-generated destructor stub
   }
   
   bool
